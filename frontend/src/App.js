@@ -12,7 +12,7 @@ const App = () => {
         <Header />
         <main className='mb-auto'>
           <Route path='/' component={Home} exact />
-          <Route path='/product/:id' component={ViewProduct} />
+          <Route path='/products/:id' component={ViewProduct} />
         </main>
         <Footer />
       </div>

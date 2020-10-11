@@ -1,9 +1,20 @@
-import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import Rating from '../components/Rating';
 
-const ViewProduct = () => {
-  var product = useLocation().state.product;
+import axios from 'axios';
+
+const ViewProduct = ({ match }) => {
+  const [product, setProduct] = useState({});
+
+  useEffect(() => {
+    const fetchProduct = async () => {
+      const { data } = await axios.get(`/api/products/${match.params.id}`);
+      setProduct(data);
+    };
+
+    fetchProduct();
+  }, [match]);
 
   return (
     <div>

@@ -1,7 +1,7 @@
 import React from 'react';
 
 const Rating = ({ value, text, className }) => {
-  const rating = value.toString().split('.');
+  const rating = value ? value.toString().split('.') : [0, 0];
 
   return (
     <div className={className}>
