@@ -15,6 +15,13 @@ module.exports = {
   important: false,
   separator: ':',
   theme: {
+    extend: {
+      height: {
+        '1/4': '25vh',
+        '1/2': '50vh',
+        '3/4': '75vh',
+      },
+    },
     screens: {
       sm: '640px',
       md: '768px',
