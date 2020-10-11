@@ -1,8 +1,24 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
+import Rating from './Rating';
 
 const Product = ({ product }) => {
+  let history = useHistory();
+
+  const viewProduct = () => {
+    history.push({
+      pathname: `/product/${product._id}`,
+      state: {
+        product: product,
+      },
+    });
+  };
+
   return (
-    <div className='w-full max-w-sm mx-auto rounded-md overflow-hidden shadow-lg bg-gray-800 cursor-pointer'>
+    <div
+      className='w-full max-w-sm mx-auto rounded-md overflow-hidden shadow-lg bg-gray-800 cursor-pointer'
+      onClick={viewProduct}
+    >
       <div
         className='flex items-end justify-end h-1/2 w-full bg-cover hover:opacity-75'
         style={{ backgroundImage: `url(${product.image})` }}
@@ -12,13 +28,7 @@ const Product = ({ product }) => {
           {product.name} -{' '}
           <span className='text-green-400'>${product.price}</span>
         </div>
-        <div className='text-md mb-2 text-gray-400'>
-          <span className='text-orange-400 pr-2'>
-            <i className='ri-star-fill pr-2'></i>
-            {product.rating}
-          </span>{' '}
-          from {product.numReviews} reviews
-        </div>
+        <Rating value={product.rating} text={`${product.numReviews} reviews`} />
       </div>
     </div>
   );

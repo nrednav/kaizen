@@ -44,7 +44,7 @@ const products = [
     category: 'Backpacks',
     price: 199.99,
     countInStock: 7,
-    rating: 4.0,
+    rating: 5.0,
     numReviews: 8,
   },
 ];
