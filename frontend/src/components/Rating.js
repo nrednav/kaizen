@@ -1,10 +1,10 @@
 import React from 'react';
 
-const Rating = ({ value, text }) => {
+const Rating = ({ value, text, className }) => {
   const rating = value.toString().split('.');
 
   return (
-    <div className=''>
+    <div className={className}>
       {[...Array(parseInt(rating[0]))].map((value, index) => (
         <span className='inline-block align-top text-orange-300' key={index}>
           <i className='ri-star-fill'></i>
@@ -19,9 +19,11 @@ const Rating = ({ value, text }) => {
           ></i>
         </span>
       )}
-      <div className='text-white'>
-        {value}/5 from {text}
-      </div>
+      {text && (
+        <div className='text-white'>
+          {value}/5 from {text}
+        </div>
+      )}
     </div>
   );
 };

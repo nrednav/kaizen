@@ -1,0 +1,19 @@
+{
+  "name": "kaizen",
+  "version": "1.0.0",
+  "description": "e-Commerce web platform",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nrednav/kaizen.git"
+  },
+  "author": "Vandern Rodrigues",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nrednav/kaizen/issues"
+  },
+  "homepage": "https://github.com/nrednav/kaizen#readme"
+}
