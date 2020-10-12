@@ -1,4 +1,3 @@
-import e from 'express';
 import express from 'express';
 import asyncHandler from 'express-async-handler';
 
@@ -28,9 +27,8 @@ router.get(
     if (product) {
       res.json(product);
     } else {
-      res.status(404).json({
-        message: `Could not find a product with ID: ${req.params.id}`,
-      });
+      res.status(404);
+      throw new Error(`Could not find product with ID: ${req.params.id}`);
     }
   })
 );
