@@ -1,6 +1,5 @@
 const products = [
   {
-    _id: '1',
     name: 'Backpack 1',
     image: '/assets/images/products/backpacks/1.jpg',
     description: 'Insert description here',
@@ -12,7 +11,6 @@ const products = [
     numReviews: 12,
   },
   {
-    _id: '2',
     name: 'Backpack 2',
     image: '/assets/images/products/backpacks/2.jpg',
     description: 'Insert description here',
@@ -24,7 +22,6 @@ const products = [
     numReviews: 8,
   },
   {
-    _id: '3',
     name: 'Backpack 3',
     image: '/assets/images/products/backpacks/3.jpg',
     description: 'Insert description here',
@@ -36,7 +33,6 @@ const products = [
     numReviews: 8,
   },
   {
-    _id: '4',
     name: 'Backpack 4',
     image: '/assets/images/products/backpacks/1.jpg',
     description: 'Insert description here',
