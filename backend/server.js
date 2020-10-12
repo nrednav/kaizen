@@ -3,25 +3,19 @@ import dotenv from 'dotenv';
 import connectToDB from './config/db.js';
 import colors from 'colors';
 
-import products from './data/products.js';
+// Routes
+import productRoutes from './routes/products.js';
 
+// Initialisation
 dotenv.config();
-
 connectToDB();
-
 const app = express();
+
+// Middleware - Routing
+app.use('/api/products', productRoutes);
 
 app.get('/', (req, res) => {
   res.send('API is running');
-});
-
-app.get('/api/products', (req, res) => {
-  res.json(products);
-});
-
-app.get('/api/products/:id', (req, res) => {
-  const product = products.find((p) => p._id === req.params.id);
-  res.json(product);
 });
 
 const PORT = process.env.PORT || 5000;
