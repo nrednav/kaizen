@@ -1,9 +1,12 @@
 import React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
+
 import Header from './components/Header';
 import Footer from './components/Footer';
+
 import Home from './screens/Home';
 import ViewProduct from './screens/ViewProduct';
+import Cart from './screens/Cart';
 
 const App = () => {
   return (
@@ -13,6 +16,7 @@ const App = () => {
         <main className='mb-auto'>
           <Route path='/' component={Home} exact />
           <Route path='/products/:id' component={ViewProduct} />
+          <Route path='/cart/:id?' component={Cart} />
         </main>
         <Footer />
       </div>

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -8,7 +8,9 @@ import Alert from '../components/Alert';
 
 import { fetchProduct } from '../actions/product';
 
-const ViewProduct = ({ match }) => {
+const ViewProduct = ({ history, match }) => {
+  const [quantity, setQuantity] = useState(1);
+
   const dispatch = useDispatch();
   const productDetails = useSelector((state) => state.productDetails);
   const { loading, error, product } = productDetails;
@@ -16,6 +18,10 @@ const ViewProduct = ({ match }) => {
   useEffect(() => {
     dispatch(fetchProduct(match.params.id));
   }, [dispatch, match]);
+
+  const addToCartHandler = () => {
+    history.push(`/cart/${match.params.id}?quantity=${quantity}`);
+  };
 
   return (
     <div>
@@ -30,7 +36,9 @@ const ViewProduct = ({ match }) => {
       {loading ? (
         <Loader />
       ) : error ? (
-        <Alert variant='error' message={error}></Alert>
+        <div className='flex justify-center'>
+          <Alert variant='error' message={error}></Alert>
+        </div>
       ) : (
         <div className='flex mb-4 items-start'>
           <div className='product-image h-1/2 w-1/4 overflow-hidden shadow-lg rounded-md ml-8'>
@@ -64,8 +72,29 @@ const ViewProduct = ({ match }) => {
                 {product.countInStock > 0 ? 'In Stock' : 'Out Of Stock'}
               </p>
             </div>
+
+            {product.countInStock > 0 && (
+              <div className='w-full flex items-center justify-between px-4 border-b-2 border-gray-400 h-16'>
+                <p>Quantity:</p>
+                <div>
+                  <select
+                    value={quantity}
+                    onChange={(e) => setQuantity(e.target.value)}
+                    className='w-full block appearance-none bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 rounded shadow leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
+                  >
+                    {[...Array(product.countInStock).keys()].map((val) => (
+                      <option key={val + 1} value={val + 1}>
+                        {val + 1}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+            )}
+
             <div className='flex justify-center'>
               <button
+                onClick={() => addToCartHandler()}
                 className={
                   `${product.countInStock === 0 ? 'cursor-not-allowed' : ''}` +
                   ' text-base uppercase border w-1/2 my-4 h-12 text-white bg-gray-800 hover:opacity-75 rounded-lg'
