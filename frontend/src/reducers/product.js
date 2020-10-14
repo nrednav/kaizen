@@ -1,19 +1,19 @@
 import {
-  PRODUCT_LIST_REQUEST,
-  PRODUCT_LIST_SUCCESS,
-  PRODUCT_LIST_FAILURE,
-  PRODUCT_DETAILS_REQUEST,
-  PRODUCT_DETAILS_SUCCESS,
-  PRODUCT_DETAILS_FAILURE,
+  FETCH_PRODUCTS_REQUEST,
+  FETCH_PRODUCTS_SUCCESS,
+  FETCH_PRODUCTS_FAILURE,
+  FETCH_PRODUCT_REQUEST,
+  FETCH_PRODUCT_SUCCESS,
+  FETCH_PRODUCT_FAILURE,
 } from '../constants/product';
 
 export const productListReducer = (state = { products: [] }, action) => {
   switch (action.type) {
-    case PRODUCT_LIST_REQUEST:
+    case FETCH_PRODUCTS_REQUEST:
       return { loading: true, products: [] };
-    case PRODUCT_LIST_SUCCESS:
+    case FETCH_PRODUCTS_SUCCESS:
       return { loading: false, products: action.payload };
-    case PRODUCT_LIST_FAILURE:
+    case FETCH_PRODUCTS_FAILURE:
       return { loading: false, error: action.payload };
     default:
       return state;
@@ -25,11 +25,11 @@ export const productDetailsReducer = (
   action
 ) => {
   switch (action.type) {
-    case PRODUCT_DETAILS_REQUEST:
+    case FETCH_PRODUCT_REQUEST:
       return { loading: true, ...state };
-    case PRODUCT_DETAILS_SUCCESS:
+    case FETCH_PRODUCT_SUCCESS:
       return { loading: false, product: action.payload };
-    case PRODUCT_DETAILS_FAILURE:
+    case FETCH_PRODUCT_FAILURE:
       return { loading: false, error: action.payload };
     default:
       return state;
