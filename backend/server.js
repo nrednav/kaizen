@@ -9,14 +9,19 @@ import {
 
 // Routes
 import productRoutes from './routes/products.js';
+import userRoutes from './routes/users.js';
 
 // Initialisation
 dotenv.config();
 connectToDB();
 const app = express();
 
+// Middleware - General
+app.use(express.json());
+
 // Middleware - Routing
 app.use('/api/products', productRoutes);
+app.use('/api/users', userRoutes);
 
 // Middleware - Error Handling
 app.use(notFoundErrorHandler);
