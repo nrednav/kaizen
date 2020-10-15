@@ -7,6 +7,7 @@ import Footer from './components/Footer';
 import Home from './screens/Home';
 import ViewProduct from './screens/ViewProduct';
 import Cart from './screens/Cart';
+import Login from './screens/Login';
 
 const App = () => {
   return (
@@ -17,6 +18,7 @@ const App = () => {
           <Route path='/' component={Home} exact />
           <Route path='/products/:id' component={ViewProduct} />
           <Route path='/cart/:id?' component={Cart} />
+          <Route path='/login' component={Login} />
         </main>
         <Footer />
       </div>

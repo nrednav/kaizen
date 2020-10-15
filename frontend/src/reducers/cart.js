@@ -21,14 +21,12 @@ export const cartReducer = (state = { items: [] }, action) => {
           items: [...state.items, item],
         };
       }
-      break;
 
     case REMOVE_CART_ITEM:
       return {
         ...state,
         items: state.items.filter((item) => item.id !== action.payload),
       };
-      break;
 
     default:
       return state;

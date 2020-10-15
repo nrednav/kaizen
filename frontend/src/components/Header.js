@@ -1,10 +1,25 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useHistory } from 'react-router-dom';
+
+import { logout } from '../actions/user';
 
 const Header = () => {
+  const [showMenuOptions, toggleMenuOptions] = useState(false);
+  const user = useSelector((state) => state.user);
+  const { profile } = user;
+
+  const dispatch = useDispatch();
+  const history = useHistory();
+
   const toggleNav = (e) => {
     e.preventDefault();
     document.querySelector('#nav-content').classList.toggle('hidden');
+  };
+
+  const logoutHandler = (e) => {
+    dispatch(logout());
+    history.push('/login');
   };
 
   return (
@@ -34,7 +49,7 @@ const Header = () => {
         </div>
 
         <div
-          className='w-full flex-grow lg:flex lg:items-center lg:w-auto hidden pt-6 lg:pt-0'
+          className='relative w-full flex-grow lg:flex lg:items-center lg:w-auto hidden pt-6 lg:pt-0'
           id='nav-content'
         >
           <ul className='lg:flex justify-end flex-1 items-center'>
@@ -47,15 +62,45 @@ const Header = () => {
                 <p>Cart</p>
               </Link>
             </li>
-            <li className='mr-3'>
-              <Link
-                to='/login'
-                className='py-2 px-4 text-xl text-white no-underline flex'
-              >
-                <i className='ri-user-fill px-2 text-blue-400'></i>
-                <p>Login</p>
-              </Link>
-            </li>
+            {profile ? (
+              <li className='mr-3'>
+                <div
+                  className='py-2 px-4 text-xl text-white no-underline flex cursor-pointer'
+                  onClick={() => toggleMenuOptions(!showMenuOptions)}
+                >
+                  <i className='ri-user-fill px-2 text-blue-400'></i>
+                  <p>{profile.name}</p>
+                </div>
+                {showMenuOptions && (
+                  <div
+                    className='absolute right-0 top-0 mt-16 w-2/12 bg-gray-800 text-white z-10'
+                    onClick={() => toggleMenuOptions(false)}
+                  >
+                    <div className='h-12 px-4 py-2 text-lg border-b-2 border-gray-700 flex items-center cursor-pointer hover:bg-gray-700'>
+                      <Link to='/profile' className='w-full'>
+                        Profile
+                      </Link>
+                    </div>
+                    <div
+                      className='h-12 px-4 py-2 text-lg flex items-center cursor-pointer hover:bg-gray-700'
+                      onClick={logoutHandler}
+                    >
+                      Logout
+                    </div>
+                  </div>
+                )}
+              </li>
+            ) : (
+              <li className='mr-3'>
+                <Link
+                  to='/login'
+                  className='py-2 px-4 text-xl text-white no-underline flex'
+                >
+                  <i className='ri-user-fill px-2 text-blue-400'></i>
+                  <p>Login</p>
+                </Link>
+              </li>
+            )}
           </ul>
         </div>
       </nav>
