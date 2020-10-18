@@ -21,7 +21,7 @@ const Home = () => {
       {loading ? (
         <Loader />
       ) : error ? (
-        <Alert variant='error' message={error}></Alert>
+        <Alert variant='error' message={error} className='w-1/2'></Alert>
       ) : (
         <div className='mt-8 px-4 grid grid-rows-1 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-y-10 gap-x-5 justify-items-center'>
           {products.map((product) => (

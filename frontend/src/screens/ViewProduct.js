@@ -37,7 +37,7 @@ const ViewProduct = ({ history, match }) => {
         <Loader />
       ) : error ? (
         <div className='flex justify-center'>
-          <Alert variant='error' message={error}></Alert>
+          <Alert variant='error' message={error} className='w-1/2'></Alert>
         </div>
       ) : (
         <div className='flex mb-4 items-start'>

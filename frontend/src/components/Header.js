@@ -5,7 +5,7 @@ import { Link, useHistory } from 'react-router-dom';
 import { logout } from '../actions/user';
 
 const Header = () => {
-  const [showMenuOptions, toggleMenuOptions] = useState(false);
+  const [showUserMenu, toggleUserMenu] = useState(false);
   const user = useSelector((state) => state.user);
   const { profile } = user;
 
@@ -20,6 +20,11 @@ const Header = () => {
   const logoutHandler = (e) => {
     dispatch(logout());
     history.push('/login');
+  };
+
+  const userMenuNavHandler = (e) => {
+    history.push('/profile');
+    toggleUserMenu(false);
   };
 
   return (
@@ -63,29 +68,29 @@ const Header = () => {
               </Link>
             </li>
             {profile ? (
-              <li className='mr-3'>
+              <li className='mr-3 relative'>
                 <div
                   className='py-2 px-4 text-xl text-white no-underline flex cursor-pointer'
-                  onClick={() => toggleMenuOptions(!showMenuOptions)}
+                  onClick={() => toggleUserMenu(!showUserMenu)}
                 >
                   <i className='ri-user-fill px-2 text-blue-400'></i>
                   <p>{profile.name}</p>
                 </div>
-                {showMenuOptions && (
-                  <div
-                    className='absolute right-0 top-0 mt-16 w-2/12 bg-gray-800 text-white z-10'
-                    onClick={() => toggleMenuOptions(false)}
-                  >
-                    <div className='h-12 px-4 py-2 text-lg border-b-2 border-gray-700 flex items-center cursor-pointer hover:bg-gray-700'>
-                      <Link to='/profile' className='w-full'>
-                        Profile
-                      </Link>
+                {showUserMenu && (
+                  <div className='absolute right-0 w-full mt-2 text-sm origin-top-right bg-gray-800 text-white z-10 border border-gray-700'>
+                    <div
+                      className='h-12 px-4 py-2 text-lg border-b-2 border-gray-700 cursor-pointer hover:bg-gray-700 flex'
+                      onClick={userMenuNavHandler}
+                    >
+                      <i className='ri-arrow-right-s-line px-2 text-blue-400'></i>
+                      <p>Profile</p>
                     </div>
                     <div
-                      className='h-12 px-4 py-2 text-lg flex items-center cursor-pointer hover:bg-gray-700'
+                      className='h-12 px-4 py-2 text-lg cursor-pointer hover:bg-gray-700 flex'
                       onClick={logoutHandler}
                     >
-                      Logout
+                      <i className='ri-arrow-right-s-line px-2 text-blue-400'></i>
+                      <p>Logout</p>
                     </div>
                   </div>
                 )}
