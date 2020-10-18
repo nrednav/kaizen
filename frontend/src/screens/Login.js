@@ -28,7 +28,7 @@ const Login = ({ location, history }) => {
 
   return (
     <div className='w-full flex justify-center mt-8'>
-      <div className='w-5/12'>
+      <div className='w-8/12 sm:w-6/12 lg:w-4/12'>
         <h1 className='text-center font-semibold text-4xl border-b-2 border-gray-400 pb-4 mx-4'>
           Login
         </h1>

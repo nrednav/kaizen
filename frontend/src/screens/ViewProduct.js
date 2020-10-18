@@ -40,28 +40,32 @@ const ViewProduct = ({ history, match }) => {
           <Alert variant='error' message={error} className='w-1/2'></Alert>
         </div>
       ) : (
-        <div className='flex mb-4 items-start'>
-          <div className='product-image h-1/2 w-1/4 overflow-hidden shadow-lg rounded-md ml-8'>
+        <div className='flex flex-col lg:flex-row mb-4 lg:items-start'>
+          <div className='product-image w-6/12 md:w-4/12 lg:w-3/12 lg:ml-8 overflow-hidden shadow-lg rounded-md self-center'>
             <img
               className='object-cover object-center w-full h-full'
               src={product.image}
               alt={product.name}
             />
           </div>
-          <div className='product-details flex flex-col flex-grow ml-8 px-4'>
-            <h3 className='text-3xl font-semibold'>{product.name}</h3>
-            <div className='flex flex-row items-center'>
-              <Rating className='py-2 text-2xl' value={product.rating} />
-              <span className='pl-4 font-semibold'>
+          <div className='product-details flex flex-col flex-grow px-4 items-center lg:items-start lg:ml-8'>
+            <h3 className='text-3xl font-semibold mt-4 lg:mt-0'>
+              {product.name}
+            </h3>
+            <div className='flex flex-col lg:flex-row items-center'>
+              <Rating className='pt-2 text-2xl' value={product.rating} />
+              <span className='md:pl-4 font-semibold'>
                 ({product.numReviews} reviews)
               </span>
             </div>
-            <div className='text-4xl font-semibold'>${product.price}</div>
-            <div className='mt-4'>
+            <div className='text-4xl font-semibold mt-4 lg:mt-0'>
+              ${product.price}
+            </div>
+            <div className='mt-4 text-xl'>
               <p>{product.description}</p>
             </div>
           </div>
-          <div className='product-actions w-1/4 ml-8 border border-gray-800 rounded-lg text-xl font-semibold mr-16'>
+          <div className='product-actions border border-gray-800 rounded-lg text-xl font-semibold mt-16 lg:mt-0 w-8/12 sm:w-6/12 md:w-4/12 lg:w-3/12 lg:mr-16 mx-auto'>
             <div className='flex items-center justify-between px-4 border-b-2 border-gray-400 h-12'>
               <p>Price:</p>
               <p className='font-normal'>${product.price}</p>

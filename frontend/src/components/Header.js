@@ -13,27 +13,34 @@ const Header = () => {
   const history = useHistory();
 
   const toggleNav = (e) => {
-    e.preventDefault();
     document.querySelector('#nav-content').classList.toggle('hidden');
   };
 
   const logoutHandler = (e) => {
     dispatch(logout());
     history.push('/login');
+    toggleNav();
   };
 
   const userMenuNavHandler = (e) => {
     history.push('/profile');
     toggleUserMenu(false);
+    toggleNav();
+  };
+
+  const navHandler = (route) => {
+    history.push(`/${route}`);
+    toggleNav();
   };
 
   return (
     <header>
       <nav className='flex items-center justify-between flex-wrap bg-gray-800 p-6 w-full'>
-        <div className='flex items-center flex-shrink-0 text-white mr-6'>
-          <Link to='/'>
-            <span className='text-4xl pl-2 cursor-pointer'>Kaizen</span>
-          </Link>
+        <div
+          className='flex items-center flex-shrink-0 text-white mr-6'
+          onClick={() => navHandler('')}
+        >
+          <span className='text-4xl pl-2 cursor-pointer'>Kaizen</span>
         </div>
 
         <div className='block lg:hidden'>
@@ -59,13 +66,13 @@ const Header = () => {
         >
           <ul className='lg:flex justify-end flex-1 items-center'>
             <li className='mr-3'>
-              <Link
-                to='/cart'
+              <div
                 className='py-2 px-4 text-xl text-white no-underline flex'
+                onClick={() => navHandler('cart')}
               >
                 <i className='ri-shopping-cart-fill px-2 text-blue-400'></i>
                 <p>Cart</p>
-              </Link>
+              </div>
             </li>
             {profile ? (
               <li className='mr-3 relative'>
@@ -97,13 +104,13 @@ const Header = () => {
               </li>
             ) : (
               <li className='mr-3'>
-                <Link
-                  to='/login'
+                <div
                   className='py-2 px-4 text-xl text-white no-underline flex'
+                  onClick={() => navHandler('login')}
                 >
                   <i className='ri-user-fill px-2 text-blue-400'></i>
                   <p>Login</p>
-                </Link>
+                </div>
               </li>
             )}
           </ul>
