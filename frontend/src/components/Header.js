@@ -67,7 +67,7 @@ const Header = () => {
           <ul className='lg:flex justify-end flex-1 items-center'>
             <li className='mr-3'>
               <div
-                className='py-2 px-4 text-xl text-white no-underline flex'
+                className='py-2 px-4 text-xl text-white no-underline flex cursor-pointer'
                 onClick={() => navHandler('cart')}
               >
                 <i className='ri-shopping-cart-fill px-2 text-blue-400'></i>
@@ -105,7 +105,7 @@ const Header = () => {
             ) : (
               <li className='mr-3'>
                 <div
-                  className='py-2 px-4 text-xl text-white no-underline flex'
+                  className='py-2 px-4 text-xl text-white no-underline flex cursor-pointer'
                   onClick={() => navHandler('login')}
                 >
                   <i className='ri-user-fill px-2 text-blue-400'></i>
