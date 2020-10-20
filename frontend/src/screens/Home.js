@@ -23,10 +23,13 @@ const Home = () => {
       ) : error ? (
         <Alert variant='error' message={error} className='w-1/2'></Alert>
       ) : (
-        <div className='mt-8 px-4 grid grid-rows-1 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-y-10 gap-x-5 justify-items-center'>
+        <div className='flex flex-row flex-wrap justify-evenly mt-8'>
           {products.map((product) => (
             <Product product={product} key={product._id} />
           ))}
+          <div className='mx-8 w-64 h-0 m-0 p-0'></div>
+          <div className='mx-8 w-64 h-0 m-0 p-0'></div>
+          <div className='mx-8 w-64 h-0 m-0 p-0'></div>
         </div>
       )}
     </>

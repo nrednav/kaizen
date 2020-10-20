@@ -4,17 +4,14 @@ import Rating from './Rating';
 
 const Product = ({ product }) => {
   return (
-    <div className='w-10/12 mx-auto rounded-md overflow-hidden shadow-lg bg-gray-800 cursor-pointer'>
+    <div className='mx-8 my-4 w-64 overflow-hidden shadow-lg cursor-pointer flex justify-center items-center'>
       <Link to={`/products/${product._id}`}>
-        <div
-          className='flex items-end justify-end h-1/2 bg-cover hover:opacity-75'
-          style={{
-            backgroundImage: `url(${product.image})`,
-            backgroundPosition: 'center',
-            backgroundSize: 'cover',
-          }}
-        ></div>
-        <div className='px-6 py-4'>
+        <img
+          src={product.image}
+          alt={product.name}
+          className='w-64 h-64 object-cover object-center border border-gray-400'
+        />
+        <div className='bg-gray-800 p-4'>
           <div className='text-xl mb-2 text-gray-200'>
             {product.name} -{' '}
             <span className='text-green-400'>${product.price}</span>
