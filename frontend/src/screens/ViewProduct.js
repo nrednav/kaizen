@@ -52,9 +52,12 @@ const ViewProduct = ({ history, match }) => {
             <h3 className='text-3xl font-semibold mt-4 lg:mt-0'>
               {product.name}
             </h3>
-            <div className='flex flex-col lg:flex-row items-center'>
-              <Rating className='pt-2 text-2xl' value={product.rating} />
-              <span className='md:pl-4 font-semibold'>
+            <div className='flex flex-col lg:flex-row items-center lg:py-2'>
+              <Rating
+                className='pt-2 lg:pt-0 text-2xl'
+                value={product.rating}
+              />
+              <span className='lg:pl-4 font-semibold'>
                 ({product.numReviews} reviews)
               </span>
             </div>
