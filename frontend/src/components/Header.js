@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 import { logout } from '../actions/user';
 
@@ -12,24 +12,28 @@ const Header = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const toggleNav = (e) => {
+  const toggleNav = () => {
     document.querySelector('#nav-content').classList.toggle('hidden');
   };
 
-  const logoutHandler = (e) => {
+  const logoutHandler = () => {
     dispatch(logout());
     history.push('/login');
-    toggleNav();
+    execPostNav();
   };
 
-  const userMenuNavHandler = (e) => {
+  const userMenuNavHandler = () => {
     history.push('/profile');
-    toggleUserMenu(false);
-    toggleNav();
+    execPostNav();
   };
 
   const navHandler = (route) => {
     history.push(`/${route}`);
+    execPostNav();
+  };
+
+  const execPostNav = () => {
+    toggleUserMenu(false);
     toggleNav();
   };
 

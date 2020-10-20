@@ -14,7 +14,7 @@ const Login = ({ location, history }) => {
 
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
-  const { loading, error, profile } = user;
+  const { loading, loginError, profile } = user;
 
   useEffect(() => {
     if (profile) {
@@ -32,9 +32,9 @@ const Login = ({ location, history }) => {
         <h1 className='text-center font-semibold text-4xl border-b-2 border-gray-400 pb-4 mx-4'>
           Login
         </h1>
-        {error && (
+        {loginError && (
           <div className='flex justify-center py-4'>
-            <Alert variant='error' message={error} className='w-3/4' />
+            <Alert variant='error' message={loginError} className='w-3/4' />
           </div>
         )}
         {loading ? (

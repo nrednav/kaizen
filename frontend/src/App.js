@@ -8,6 +8,7 @@ import Home from './screens/Home';
 import ViewProduct from './screens/ViewProduct';
 import Cart from './screens/Cart';
 import Login from './screens/Login';
+import Register from './screens/Register';
 
 const App = () => {
   return (
@@ -19,6 +20,7 @@ const App = () => {
           <Route path='/products/:id' component={ViewProduct} />
           <Route path='/cart/:id?' component={Cart} />
           <Route path='/login' component={Login} />
+          <Route path='/register' component={Register} />
         </main>
         <Footer />
       </div>
