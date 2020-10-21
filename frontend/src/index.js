@@ -8,6 +8,8 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
+import 'smoothscroll-for-websites';
+
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>

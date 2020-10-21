@@ -65,11 +65,11 @@ const Header = () => {
         </div>
 
         <div
-          className='relative w-full flex-grow lg:flex lg:items-center lg:w-auto hidden pt-6 lg:pt-0'
+          className='relative w-full flex-grow lg:flex items-center lg:w-auto hidden pt-6 lg:pt-0'
           id='nav-content'
         >
           <ul className='lg:flex justify-end flex-1 items-center'>
-            <li className='mr-3'>
+            <li>
               <div
                 className='py-2 px-4 text-xl text-white no-underline flex cursor-pointer'
                 onClick={() => navHandler('cart')}
@@ -79,7 +79,7 @@ const Header = () => {
               </div>
             </li>
             {profile ? (
-              <li className='mr-3 relative'>
+              <li className='mr-3 relative max-w-xs'>
                 <div
                   className='py-2 px-4 text-xl text-white no-underline flex cursor-pointer'
                   onClick={() => toggleUserMenu(!showUserMenu)}
@@ -88,7 +88,7 @@ const Header = () => {
                   <p>{profile.name}</p>
                 </div>
                 {showUserMenu && (
-                  <div className='absolute right-0 w-full mt-2 text-sm origin-top-right bg-gray-800 text-white z-10 border border-gray-700'>
+                  <div className='absolute right-0 min-w-48 w-full mt-2 text-sm origin-top-right bg-gray-800 text-white z-10 border border-gray-700'>
                     <div
                       className='h-12 px-4 py-2 text-lg border-b-2 border-gray-700 cursor-pointer hover:bg-gray-700 flex'
                       onClick={userMenuNavHandler}

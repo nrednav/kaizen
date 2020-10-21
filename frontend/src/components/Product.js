@@ -9,7 +9,7 @@ const Product = ({ product }) => {
         <img
           src={product.image}
           alt={product.name}
-          className='w-64 h-64 object-cover object-center border border-gray-400'
+          className='w-64 h-64 object-cover object-center border border-gray-400 hover:opacity-75'
         />
         <div className='bg-gray-800 p-4'>
           <div className='text-xl mb-2 text-gray-200'>
