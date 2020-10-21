@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Sidebar from './Sidebar';
-import ProfileMain from './ProfileMain';
+import UserProfileMain from './UserProfileMain';
 
 const UserProfile = () => {
   let sidebarMenuItems = [
@@ -16,12 +16,12 @@ const UserProfile = () => {
     },
   ];
 
-  const [activeItem, setActiveItem] = useState('');
+  const [activeItem, setActiveItem] = useState(sidebarMenuItems[0]);
 
   return (
     <div className='flex'>
       <Sidebar setActiveItem={setActiveItem} menuItems={sidebarMenuItems} />
-      <ProfileMain activeItem={activeItem} />
+      <UserProfileMain activeItem={activeItem} />
     </div>
   );
 };

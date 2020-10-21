@@ -1,6 +1,8 @@
 import React from 'react';
+import UserProfileDetails from './UserProfileDetails';
+import UserProfileOrders from './UserProfileOrders';
 
-const ProfileMain = ({ activeItem }) => {
+const UserProfileMain = ({ activeItem }) => {
   return (
     <div className='flex flex-col py-4 px-8 w-full'>
       <h1 className='text-4xl w-full'>{activeItem.label}</h1>
@@ -14,12 +16,12 @@ const ProfileMain = ({ activeItem }) => {
 const getMainContent = (label) => {
   switch (label) {
     case 'Details':
-      return <div>Details content</div>;
+      return <UserProfileDetails></UserProfileDetails>;
     case 'Orders':
-      return <div>Orders content</div>;
+      return <UserProfileOrders></UserProfileOrders>;
     default:
       return <div></div>;
   }
 };
 
-export default ProfileMain;
+export default UserProfileMain;

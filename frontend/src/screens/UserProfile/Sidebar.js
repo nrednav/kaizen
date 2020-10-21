@@ -1,24 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 const Sidebar = ({ setActiveItem, menuItems }) => {
-  const [lastActiveMenuItem, setLastActiveMenuItem] = useState(menuItems[0]);
-
-  const activeMenuItemHandler = (menuItem) => {
-    var lastActiveElement = document.querySelector(`#${lastActiveMenuItem.id}`);
+  const activateMenuItem = (menuItem) => {
+    // Unstyle the last active item
+    var lastActiveElement = document.querySelector(
+      '.sidebar-menu-item.border-blue-400'
+    );
     lastActiveElement.classList.remove('border-blue-400');
     lastActiveElement.classList.add('border-gray-900');
 
-    setLastActiveMenuItem(menuItem);
+    // Style current active item
     setActiveItem(menuItem);
     var element = document.querySelector(`#${menuItem.id}`);
     element.classList.remove('border-gray-900');
     element.classList.add('border-blue-400');
   };
-
-  useEffect(() => {
-    activeMenuItemHandler(lastActiveMenuItem);
-  }, []);
 
   return (
     <>
@@ -30,12 +27,12 @@ const Sidebar = ({ setActiveItem, menuItems }) => {
           {menuItems.map((menuItem, index) => {
             return (
               <SidebarMenuItem
-                className={
-                  'cursor-pointer w-full border-l-4 hover:border-blue-400 border-gray-900 hover:bg-opacity-25 hover:bg-gray-800 px-8 py-4 flex flex-row items-center justify-start'
-                }
+                className={`sidebar-menu-item ${
+                  index === 0 ? 'border-blue-400' : 'border-gray-900'
+                } cursor-pointer w-full border-l-4 hover:border-blue-400 hover:bg-opacity-25 hover:bg-gray-800 px-8 py-4 flex flex-row items-center justify-start`}
                 key={menuItem.label}
                 id={menuItem.id}
-                onClick={() => activeMenuItemHandler(menuItem)}
+                onClick={() => activateMenuItem(menuItem)}
               >
                 <Icon className='text-xl'>
                   <i className={menuItem.icon}></i>
