@@ -23,7 +23,7 @@ const Home = () => {
       ) : error ? (
         <Alert variant='error' message={error} className='w-1/2'></Alert>
       ) : (
-        <div className='flex flex-row flex-wrap justify-evenly mt-8'>
+        <div className='flex flex-row flex-wrap justify-evenly my-8'>
           {products.map((product) => (
             <Product product={product} key={product._id} />
           ))}

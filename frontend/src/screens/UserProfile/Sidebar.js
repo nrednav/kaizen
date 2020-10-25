@@ -21,7 +21,7 @@ const Sidebar = ({ setActiveItem, menuItems }) => {
     <>
       <SidebarContainer
         id='profile-sidebar'
-        className='hidden transform -translate-x-24 sm:translate-x-0 w-24 lg:w-2/12 sm:flex flex-col items-start h-screen bg-gray-900 text-white'
+        className='hidden transform -translate-x-24 sm:translate-x-0 w-24 lg:w-2/12 sm:flex flex-col items-start min-h-screen bg-gray-900 text-white'
       >
         <SidebarMenu className='flex flex-col items-center w-full list-none'>
           {menuItems.map((menuItem, index) => {

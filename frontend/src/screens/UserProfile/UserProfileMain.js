@@ -6,9 +6,7 @@ const UserProfileMain = ({ activeItem }) => {
   return (
     <div className='flex flex-col py-4 px-8 w-full'>
       <h1 className='text-4xl w-full'>{activeItem.label}</h1>
-      <div className='mt-4 h-full border border-black'>
-        {getMainContent(activeItem.label)}
-      </div>
+      <div className='mt-4 h-full'>{getMainContent(activeItem.label)}</div>
     </div>
   );
 };
