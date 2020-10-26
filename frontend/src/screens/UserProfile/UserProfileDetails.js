@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
+import { generateFormField } from '../../utils/formUtils';
 
 import { fetchProfile, updateProfile } from '../../actions/userProfile';
 
@@ -107,7 +108,9 @@ const UserProfileDetails = () => {
       ) : (
         profile && (
           <form className='max-w-md' onSubmit={handleSubmit(onFormSubmit)}>
-            {formFields.map((field) => generateField(field, register, errors))}
+            {formFields.map((field) =>
+              generateFormField(field, register, errors)
+            )}
             <div className='flex justify-start py-8'>
               <button
                 type='submit'
@@ -120,28 +123,6 @@ const UserProfileDetails = () => {
         )
       )}
     </>
-  );
-};
-
-const generateField = (field, register, errors) => {
-  return (
-    <div className='flex flex-col mt-4' key={field.label}>
-      <label className='block text-lg text-gray-800 font-semibold mb-2'>
-        {field.label}:
-      </label>
-      <input
-        defaultValue={field.value}
-        name={field.label}
-        type={field.type}
-        className='h-12 shadow appearance-none border py-2 px-4 text-gray-800 leading-tight focus:outline-none'
-        ref={register(field.validation)}
-      />
-      {errors[field.label] && (
-        <p className='text-red-600 text-right py-2'>
-          {errors[field.label].message}
-        </p>
-      )}
-    </div>
   );
 };
 
