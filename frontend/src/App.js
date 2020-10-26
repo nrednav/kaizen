@@ -12,6 +12,7 @@ import Register from './screens/Register';
 import UserProfile from './screens/UserProfile/UserProfile';
 import ProtectedRoute from './components/ProtectedRoute';
 import Shipping from './screens/Shipping/Shipping';
+import Payment from './screens/Payment/Payment';
 
 const App = () => {
   return (
@@ -25,7 +26,8 @@ const App = () => {
           <Route path='/login' component={Login} />
           <Route path='/register' component={Register} />
           <ProtectedRoute path='/profile' component={UserProfile} />
-          <Route path='/shipping' component={Shipping} />
+          <ProtectedRoute path='/shipping' component={Shipping} />
+          <ProtectedRoute path='/payment' component={Payment} />
         </main>
         <Footer />
       </div>

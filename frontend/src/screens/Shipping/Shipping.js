@@ -3,14 +3,15 @@ import { useForm } from 'react-hook-form';
 import { useSelector, useDispatch } from 'react-redux';
 import { generateFormField } from '../../utils/formUtils';
 
-import { saveShippingAddress } from '../../actions/shipping';
+import { saveShippingAddress } from '../../actions/checkout';
+import CheckoutSteps from '../../components/CheckoutSteps';
 
 const Shipping = ({ history }) => {
   const dispatch = useDispatch();
   const { register, handleSubmit, errors } = useForm();
 
-  const shippingAddress = useSelector((state) => state.shippingAddress);
-  const { address, city, postalCode, country } = shippingAddress;
+  const checkout = useSelector((state) => state.checkout);
+  const { address, city, postalCode, country } = checkout.shippingAddress;
 
   const formFields = [
     {
@@ -53,6 +54,7 @@ const Shipping = ({ history }) => {
 
   return (
     <div className='max-w-md mx-auto'>
+      <CheckoutSteps activeSteps={[0, 1]}></CheckoutSteps>
       <h1 className='text-4xl px-8 py-4'>Shipping</h1>
       <form className='px-8' onSubmit={handleSubmit(onFormSubmit)}>
         {formFields.map((field) => generateFormField(field, register, errors))}
