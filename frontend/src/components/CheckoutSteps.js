@@ -15,19 +15,22 @@ const CheckoutSteps = ({ activeSteps }) => {
     <div className='flex flex-row justify-evenly max-w-md my-4'>
       {steps.map((step, index) => {
         var disabled = !activeSteps.includes(index);
+        var showSeparator = index !== 3;
         return (
-          <button
-            onClick={() => history.push(step.path)}
-            key={step.label}
-            disabled={disabled}
-            className={`${
-              disabled
-                ? 'text-gray-600 cursor-not-allowed'
-                : 'text-black hover:underline'
-            } py-2 text-xl`}
-          >
-            {step.label}
-          </button>
+          <div className='flex flex-row items-center' key={step.label}>
+            <button
+              onClick={() => history.push(step.path)}
+              disabled={disabled}
+              className={`${
+                disabled
+                  ? 'text-gray-600 cursor-not-allowed'
+                  : 'text-black hover:underline'
+              } py-2 px-4 text-sm sm:text-xl`}
+            >
+              {step.label}
+            </button>
+            {showSeparator && <i className='ri-arrow-right-s-line text-xl'></i>}
+          </div>
         );
       })}
     </div>

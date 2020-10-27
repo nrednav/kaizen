@@ -13,6 +13,7 @@ import UserProfile from './screens/UserProfile/UserProfile';
 import ProtectedRoute from './components/ProtectedRoute';
 import Shipping from './screens/Shipping/Shipping';
 import Payment from './screens/Payment/Payment';
+import Order from './screens/Order/Order';
 
 const App = () => {
   return (
@@ -28,6 +29,7 @@ const App = () => {
           <ProtectedRoute path='/profile' component={UserProfile} />
           <ProtectedRoute path='/shipping' component={Shipping} />
           <ProtectedRoute path='/payment' component={Payment} />
+          <ProtectedRoute path='/order' component={Order} />
         </main>
         <Footer />
       </div>

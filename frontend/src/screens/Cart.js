@@ -100,7 +100,7 @@ const Cart = ({ match, location, history }) => {
           <i className='ri-bill-fill'></i>
           <h1 className='ml-4'>Summary</h1>
         </div>
-        <div className='flex flex-col mt-4 uppercase'>
+        <div className='flex flex-col mt-4'>
           <div className='flex flex-row text-xl border-b-2 border-gray-400 py-4'>
             <p>Quantity:</p>
             <p className='ml-4 font-semibold'>

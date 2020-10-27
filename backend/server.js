@@ -10,6 +10,7 @@ import {
 // Routes
 import productRoutes from './routes/products.js';
 import userRoutes from './routes/users.js';
+import orderRoutes from './routes/orders.js';
 
 // Initialisation
 dotenv.config();
@@ -22,6 +23,7 @@ app.use(express.json());
 // Middleware - Routing
 app.use('/api/products', productRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/orders', orderRoutes);
 
 // Middleware - Error Handling
 app.use(notFoundErrorHandler);

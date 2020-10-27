@@ -55,7 +55,7 @@ const Shipping = ({ history }) => {
   return (
     <div className='max-w-md mx-auto'>
       <CheckoutSteps activeSteps={[0, 1]}></CheckoutSteps>
-      <h1 className='text-4xl px-8 py-4'>Shipping</h1>
+      <h1 className='text-4xl px-8 py-4'>Shipping Details</h1>
       <form className='px-8' onSubmit={handleSubmit(onFormSubmit)}>
         {formFields.map((field) => generateFormField(field, register, errors))}
         <div className='flex justify-start py-8'>
