@@ -47,7 +47,7 @@ const Cart = ({ match, location, history }) => {
                 <div className='w-3/12 md:w-2/12'>Actions</div>
               </div>
               {items.map((item) => (
-                <div className='flex flex-row mt-4' key={item.id}>
+                <div className='flex flex-row mt-4' key={item.product}>
                   <div className='w-2/12 md:w-1/12 overflow-hidden border border-gray-800 shadow-lg '>
                     <img
                       className='object-cover object-center w-full h-full'
@@ -69,7 +69,9 @@ const Cart = ({ match, location, history }) => {
                     <select
                       value={item.quantity}
                       onChange={(e) =>
-                        dispatch(addToCart(item.id, Number(e.target.value)))
+                        dispatch(
+                          addToCart(item.product, Number(e.target.value))
+                        )
                       }
                       className='block appearance-none bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 rounded shadow leading-tight focus:outline-none focus:bg-white focus:border-gray-500'
                     >
@@ -83,7 +85,7 @@ const Cart = ({ match, location, history }) => {
                   <div className='w-3/12 md:w-2/12 flex items-center justify-center'>
                     <button
                       className='flex flex-row items-center'
-                      onClick={() => removeFromCartHandler(item.id)}
+                      onClick={() => removeFromCartHandler(item.product)}
                       title='Remove from cart'
                     >
                       <i className='ri-delete-bin-fill text-2xl text-gray-600'></i>

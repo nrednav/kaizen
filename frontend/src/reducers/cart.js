@@ -5,14 +5,14 @@ export const cartReducer = (state = { items: [] }, action) => {
     case ADD_CART_ITEM:
       const item = action.payload;
       const itemExists = state.items.find(
-        (existingItem) => existingItem.id === item.id
+        (existingItem) => existingItem.product === item.product
       );
 
       if (itemExists) {
         return {
           ...state,
           items: state.items.map((existingItem) =>
-            existingItem.id === item.id ? item : existingItem
+            existingItem.product === item.product ? item : existingItem
           ),
         };
       } else {
@@ -25,7 +25,7 @@ export const cartReducer = (state = { items: [] }, action) => {
     case REMOVE_CART_ITEM:
       return {
         ...state,
-        items: state.items.filter((item) => item.id !== action.payload),
+        items: state.items.filter((item) => item.product !== action.payload),
       };
 
     default:

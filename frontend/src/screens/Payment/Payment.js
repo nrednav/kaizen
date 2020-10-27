@@ -19,7 +19,6 @@ const Payment = ({ history }) => {
   }
 
   const onFormSubmit = (data) => {
-    console.log(data);
     dispatch(savePaymentMethod(data['Payment Method']));
     history.push('/order');
   };

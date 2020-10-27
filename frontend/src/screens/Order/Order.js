@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import CheckoutSteps from '../../components/CheckoutSteps';
-// import Alert from '../../components/Alert';
+import { createOrder } from '../../actions/order';
 
-const Order = () => {
-  // eslint-disable-next-line
+import CheckoutSteps from '../../components/CheckoutSteps';
+import Alert from '../../components/Alert';
+
+const Order = ({ history }) => {
   const dispatch = useDispatch();
 
   const cart = useSelector((state) => state.cart);
@@ -21,11 +22,30 @@ const Order = () => {
   prices['tax'] = 0.05 * prices['subtotal'];
   prices['total'] = prices['subtotal'] + prices['shipping'] + prices['tax'];
 
+  const createdOrder = useSelector((state) => state.createdOrder);
+  const { order, success, createOrderError } = createdOrder;
+
+  useEffect(() => {
+    if (success) {
+      history.push(`/orders/${order._id}`);
+    }
+  }, [success, history, order]);
+
+  const placeOrderHandler = () => {
+    var order = { orderItems: items, shippingAddress, paymentMethod, prices };
+    dispatch(createOrder(order));
+  };
+
   return (
     <div className='flex flex-col mb-4'>
       <div className='self-center'>
         <CheckoutSteps activeSteps={[0, 1, 2, 3]} />
       </div>
+      {createOrderError && (
+        <div className='flex justify-center py-4'>
+          <Alert variant='error' message={createOrderError} className='w-3/4' />
+        </div>
+      )}
       <div className='flex flex-col lg:flex-row lg:justify-between mx-auto w-11/12 sm:w-10/12'>
         <div className='lg:w-6/12'>
           <div className='px-4 py-2 border-b-2 border-gray-400'>
@@ -49,7 +69,10 @@ const Order = () => {
             </div>
             <div className='py-4'>
               {items.map((item) => (
-                <div className='flex flex-row py-4 items-center' key={item.id}>
+                <div
+                  className='flex flex-row py-4 items-center'
+                  key={item.product}
+                >
                   <div className='w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 overflow-hidden border border-gray-800 shadow-lg '>
                     <img
                       className='object-cover object-center w-full h-full'
@@ -85,6 +108,7 @@ const Order = () => {
             ))}
             <div className='flex flex-row lg:text-xl py-4 justify-center mt-4'>
               <button
+                onClick={placeOrderHandler}
                 className={
                   `${items.length === 0 ? 'cursor-not-allowed' : ''}` +
                   ' text-base uppercase border w-3/4 h-12 px-4 text-white bg-gray-800 hover:opacity-75'
