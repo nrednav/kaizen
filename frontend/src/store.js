@@ -11,7 +11,7 @@ import {
   shippingAddressReducer,
   paymentMethodReducer,
 } from './reducers/checkout';
-import { createdOrderReducer } from './reducers/order';
+import { createdOrderReducer, fetchedOrderReducer } from './reducers/order';
 
 const reducers = combineReducers({
   productList: productListReducer,
@@ -24,6 +24,7 @@ const reducers = combineReducers({
     paymentMethod: paymentMethodReducer,
   }),
   createdOrder: createdOrderReducer,
+  fetchedOrder: fetchedOrderReducer,
 });
 
 const cartItemsFromStorage = localStorage.getItem('cartItems')

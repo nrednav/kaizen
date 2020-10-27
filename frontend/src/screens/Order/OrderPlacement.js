@@ -6,7 +6,7 @@ import { createOrder } from '../../actions/order';
 import CheckoutSteps from '../../components/CheckoutSteps';
 import Alert from '../../components/Alert';
 
-const Order = ({ history }) => {
+const OrderPlacement = ({ history }) => {
   const dispatch = useDispatch();
 
   const cart = useSelector((state) => state.cart);
@@ -125,4 +125,4 @@ const Order = ({ history }) => {
   );
 };
 
-export default Order;
+export default OrderPlacement;
