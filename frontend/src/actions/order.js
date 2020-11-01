@@ -94,3 +94,34 @@ export const payOrder = (orderID, paymentResult) => async (
     });
   }
 };
+
+export const fetchUserOrders = () => async (dispatch, getState) => {
+  try {
+    dispatch({ type: oc.FETCH_USER_ORDERS_REQUEST });
+
+    const {
+      user: { profile },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${profile.token}`,
+      },
+    };
+
+    const { data } = await axios.get(
+      `/api/users/${profile._id}/orders`,
+      config
+    );
+
+    dispatch({ type: oc.FETCH_USER_ORDERS_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: oc.FETCH_USER_ORDERS_FAILURE,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};

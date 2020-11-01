@@ -40,3 +40,18 @@ export const orderPaymentReducer = (state = {}, action) => {
       return state;
   }
 };
+
+export const userOrdersReducer = (state = {}, action) => {
+  switch (action.type) {
+    case oc.FETCH_USER_ORDERS_REQUEST:
+      return { ...state, loading: true };
+    case oc.FETCH_USER_ORDERS_SUCCESS:
+      return { ...state, loading: false, orders: action.payload };
+    case oc.FETCH_USER_ORDERS_FAILURE:
+      return { ...state, loading: false, userOrdersError: action.payload };
+    case oc.FETCH_USER_ORDERS_RESET:
+      return { ...state, orders: [] };
+    default:
+      return state;
+  }
+};

@@ -15,6 +15,7 @@ import {
   createdOrderReducer,
   fetchedOrderReducer,
   orderPaymentReducer,
+  userOrdersReducer,
 } from './reducers/order';
 
 const reducers = combineReducers({
@@ -23,6 +24,7 @@ const reducers = combineReducers({
   cart: cartReducer,
   user: userReducer,
   userProfile: userProfileReducer,
+  userOrders: userOrdersReducer,
   checkout: combineReducers({
     shippingAddress: shippingAddressReducer,
     paymentMethod: paymentMethodReducer,

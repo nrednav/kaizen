@@ -10,6 +10,7 @@ import {
 import { FETCH_PROFILE_RESET } from '../constants/userProfile';
 
 import axios from 'axios';
+import { FETCH_USER_ORDERS_RESET } from '../constants/order';
 
 export const login = (email, password) => async (dispatch) => {
   try {
@@ -75,5 +76,6 @@ export const register = (name, email, password) => async (dispatch) => {
 export const logout = () => (dispatch) => {
   localStorage.removeItem('userProfile');
   dispatch({ type: FETCH_PROFILE_RESET });
+  dispatch({ type: FETCH_USER_ORDERS_RESET });
   dispatch({ type: USER_LOGOUT_REQUEST });
 };

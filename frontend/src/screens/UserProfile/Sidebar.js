@@ -1,7 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Sidebar = ({ setActiveItem, menuItems }) => {
+import { useHistory } from 'react-router-dom';
+
+const Sidebar = ({ activeItem, menuItems }) => {
+  const history = useHistory();
+
   const activateMenuItem = (menuItem) => {
     // Unstyle the last active item
     var lastActiveElement = document.querySelector(
@@ -11,38 +15,42 @@ const Sidebar = ({ setActiveItem, menuItems }) => {
     lastActiveElement.classList.add('border-gray-900');
 
     // Style current active item
-    setActiveItem(menuItem);
     var element = document.querySelector(`#${menuItem.id}`);
     element.classList.remove('border-gray-900');
     element.classList.add('border-blue-400');
+
+    history.push(`/profile/${menuItem.label.toLowerCase()}`);
   };
 
   return (
     <>
       <SidebarContainer
         id='profile-sidebar'
-        className='sm:static hidden transform -translate-x-24 sm:translate-x-0 w-24 lg:w-2/12 sm:flex flex-col items-start min-h-screen bg-gray-900 text-white'
+        className='sm:static hidden transform -translate-x-24 sm:translate-x-0 w-24 lg:w-2/12 sm:flex flex-col items-start min-h-full bg-gray-900 text-white'
       >
         <SidebarMenu className='flex flex-col items-center w-full list-none'>
-          {menuItems.map((menuItem, index) => {
-            return (
-              <SidebarMenuItem
-                className={`sidebar-menu-item ${
-                  index === 0 ? 'border-blue-400' : 'border-gray-900'
-                } cursor-pointer w-full border-l-4 hover:border-blue-400 hover:bg-opacity-25 hover:bg-gray-800 px-8 py-4 flex flex-row items-center justify-start`}
-                key={menuItem.label}
-                id={menuItem.id}
-                onClick={() => activateMenuItem(menuItem)}
-              >
-                <Icon className='text-xl'>
-                  <i className={menuItem.icon}></i>
-                </Icon>
-                <SidebarMenuLabel className='hidden lg:block leading-normal text-xl text-left py-2 ml-4'>
-                  {menuItem.label}
-                </SidebarMenuLabel>
-              </SidebarMenuItem>
-            );
-          })}
+          {menuItems &&
+            Object.keys(menuItems).map((key, index) => {
+              return (
+                <SidebarMenuItem
+                  className={`sidebar-menu-item ${
+                    activeItem.label === menuItems[key]['label']
+                      ? 'border-blue-400'
+                      : 'border-gray-900'
+                  } cursor-pointer w-full border-l-4 hover:border-blue-400 hover:bg-opacity-25 hover:bg-gray-800 px-8 py-4 flex flex-row items-center justify-start`}
+                  key={menuItems[key]['label']}
+                  id={menuItems[key]['id']}
+                  onClick={() => activateMenuItem(menuItems[key])}
+                >
+                  <Icon className='text-xl'>
+                    <i className={menuItems[key]['icon']}></i>
+                  </Icon>
+                  <SidebarMenuLabel className='hidden lg:block leading-normal text-xl text-left py-2 ml-4'>
+                    {menuItems[key]['label']}
+                  </SidebarMenuLabel>
+                </SidebarMenuItem>
+              );
+            })}
         </SidebarMenu>
       </SidebarContainer>
     </>
