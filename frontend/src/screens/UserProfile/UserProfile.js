@@ -18,6 +18,8 @@ const UserProfile = () => {
 
   const [activeItem, setActiveItem] = useState(sidebarMenuItems[0]);
 
+  const showSidebar = () => {};
+
   return (
     <div className='flex'>
       <Sidebar setActiveItem={setActiveItem} menuItems={sidebarMenuItems} />

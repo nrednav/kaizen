@@ -1,16 +1,24 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import axios from 'axios';
 
-import { fetchOrder } from '../../actions/order';
+import { fetchOrder, payOrder } from '../../actions/order';
 
 import Alert from '../../components/Alert';
 import Loader from '../../components/Loader';
+import { PayPalButton } from 'react-paypal-button-v2';
+import { ORDER_PAYMENT_RESET } from '../../constants/order';
 
 const ViewOrder = ({ match, history }) => {
   const dispatch = useDispatch();
 
   const fetchedOrder = useSelector((state) => state.fetchedOrder);
   const { order, loading, fetchOrderError } = fetchedOrder;
+
+  const orderPayment = useSelector((state) => state.orderPayment);
+  const { loading: paymentLoading, success: paymentSuccess } = orderPayment;
+
+  const [sdkReady, setSdkReady] = useState(false);
 
   const prices = {};
 
@@ -23,10 +31,33 @@ const ViewOrder = ({ match, history }) => {
   }
 
   useEffect(() => {
-    if (!order || order._id !== match.params.id) {
+    const addPaypalScript = async () => {
+      const { data } = await axios.get('/api/config/paypal');
+      const script = document.createElement('script');
+      script.type = 'text/javascript';
+      script.src = `https://www.paypal.com/sdk/js?client-id=${data.clientID}`;
+      script.async = true;
+      script.onload = () => {
+        setSdkReady(true);
+      };
+      document.body.appendChild(script);
+    };
+
+    if (!order || order._id !== match.params.id || paymentSuccess) {
+      dispatch({ type: ORDER_PAYMENT_RESET });
       dispatch(fetchOrder(match.params.id));
+    } else if (!order.isPaid) {
+      if (!window.paypal) {
+        addPaypalScript();
+      } else {
+        setSdkReady(true);
+      }
     }
-  }, [dispatch, match, order]);
+  }, [dispatch, match, order, paymentSuccess]);
+
+  const paymentSuccessHandler = (paymentResult) => {
+    dispatch(payOrder(order._id, paymentResult));
+  };
 
   return (
     <div>
@@ -146,6 +177,24 @@ const ViewOrder = ({ match, history }) => {
                     </div>
                   ))}
                 </div>
+                {!order.isPaid && (
+                  <div>
+                    {paymentLoading && <Loader />}
+                    {!sdkReady ? (
+                      <Loader />
+                    ) : (
+                      <div
+                        className='w-3/4 mx-auto'
+                        id='paypal-button-container'
+                      >
+                        <PayPalButton
+                          amount={order.totalPrice.toFixed(2)}
+                          onSuccess={paymentSuccessHandler}
+                        />
+                      </div>
+                    )}
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -153,90 +202,6 @@ const ViewOrder = ({ match, history }) => {
       )}
     </div>
   );
-  // return (
-  //   <div className='flex flex-col mb-4'>
-  //     {/* {fetchOrderError && (
-  //       <div className='flex justify-center py-4'>
-  //         <Alert variant='error' message={fetchOrderError} className='w-3/4' />
-  //       </div>
-  //     )} */}
-  //     <div className='flex flex-col lg:flex-row lg:justify-between mx-auto w-11/12 sm:w-10/12'>
-  //       <div className='lg:w-6/12'>
-  //         <div className='px-4 py-2 border-b-2 border-gray-400'>
-  //           <div className='text-2xl sm:text-3xl flex flex-row'>
-  //             <i className='ri-truck-fill'></i>
-  //             <h1 className='ml-4'>Shipping Details</h1>
-  //           </div>
-  //           <p className='py-4'>{`${shippingAddress.address}, ${shippingAddress.city}, ${shippingAddress.postalCode}, ${shippingAddress.country}`}</p>
-  //         </div>
-  //         <div className='px-4 py-2 border-b-2 border-gray-400'>
-  //           <div className='text-2xl sm:text-3xl flex flex-row'>
-  //             <i className='ri-money-dollar-circle-fill'></i>
-  //             <h1 className='ml-4'>Payment Method</h1>
-  //           </div>
-  //           <p className='py-4'>{paymentMethod}</p>
-  //         </div>
-  //         <div className='px-4 py-2 border-b-2 lg:border-b-0 border-gray-400'>
-  //           <div className='text-2xl sm:text-3xl flex flex-row'>
-  //             <i className='ri-shopping-cart-fill'></i>
-  //             <h1 className='ml-4'>Order Items</h1>
-  //           </div>
-  //           <div className='py-4'>
-  //             {items.map((item) => (
-  //               <div
-  //                 className='flex flex-row py-4 items-center'
-  //                 key={item.product}
-  //               >
-  //                 <div className='w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 overflow-hidden border border-gray-800 shadow-lg '>
-  //                   <img
-  //                     className='object-cover object-center w-full h-full'
-  //                     src={item.image}
-  //                     alt={item.name}
-  //                   />
-  //                 </div>
-  //                 <div className='ml-4 flex flex-col sm:flex-row sm:justify-between sm:w-full'>
-  //                   <p>{item.name}</p>
-  //                   <p className='font-semibold'>{`${item.quantity} x $${
-  //                     item.price
-  //                   } = $${item.price * item.quantity}`}</p>
-  //                 </div>
-  //               </div>
-  //             ))}
-  //           </div>
-  //         </div>
-  //       </div>
-  //       <div className='px-4 py-2 lg:w-5/12'>
-  //         <div className='text-2xl sm:text-3xl flex flex-row'>
-  //           <i className='ri-bill-fill'></i>
-  //           <h1 className='ml-4'>Order Summary</h1>
-  //         </div>
-  //         <div className='my-4'>
-  //           {Object.keys(prices).map((key) => (
-  //             <div
-  //               className='flex flex-row justify-between text-md sm:text-xl border-b-2 border-gray-400 py-4'
-  //               key={`price-${key}`}
-  //             >
-  //               <p>{`${key[0].toUpperCase()}${key.slice(1)}`}:</p>
-  //               <p className='ml-4 font-semibold'>${prices[key].toFixed(2)}</p>
-  //             </div>
-  //           ))}
-  //           <div className='flex flex-row lg:text-xl py-4 justify-center mt-4'>
-  //             <button
-  //               onClick={placeOrderHandler}
-  //               className={
-  //                 `${items.length === 0 ? 'cursor-not-allowed' : ''}` +
-  //                 ' text-base uppercase border w-3/4 h-12 px-4 text-white bg-gray-800 hover:opacity-75'
-  //               }
-  //               disabled={items.length === 0}
-  //             >
-  //               Place Order
-  //             </button>
-  //           </div>
-  //         </div>
-  //       </div>
-  //     </div>
-  //   </div>
-  // );
 };
 
 export default ViewOrder;

@@ -2,6 +2,7 @@ import asyncHandler from 'express-async-handler';
 import generateToken from '../utils/generateToken.js';
 
 import User from '../models/user.js';
+import Order from '../models/order.js';
 
 // @desc    Auth user & get token
 // @route   GET /api/users/login
@@ -104,4 +105,18 @@ const updateUserProfile = asyncHandler(async (req, res) => {
   }
 });
 
-export { authUser, getUserProfile, registerUser, updateUserProfile };
+// @desc    Get all the orders made by a user
+// @route   GET /api/users/:id/orders
+// @access  Private
+const getUserOrders = asyncHandler(async (req, res) => {
+  const orders = await Order.find({ user: req.params.id });
+  res.json(orders);
+});
+
+export {
+  authUser,
+  getUserProfile,
+  registerUser,
+  updateUserProfile,
+  getUserOrders,
+};

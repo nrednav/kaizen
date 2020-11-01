@@ -25,3 +25,18 @@ export const fetchedOrderReducer = (state = {}, action) => {
       return state;
   }
 };
+
+export const orderPaymentReducer = (state = {}, action) => {
+  switch (action.type) {
+    case oc.ORDER_PAYMENT_REQUEST:
+      return { ...state, loading: true };
+    case oc.ORDER_PAYMENT_SUCCESS:
+      return { ...state, loading: false, success: true };
+    case oc.ORDER_PAYMENT_FAILURE:
+      return { ...state, paymentError: action.payload };
+    case oc.ORDER_PAYMENT_RESET:
+      return {};
+    default:
+      return state;
+  }
+};

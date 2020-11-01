@@ -58,3 +58,39 @@ export const fetchOrder = (orderID) => async (dispatch, getState) => {
     });
   }
 };
+
+export const payOrder = (orderID, paymentResult) => async (
+  dispatch,
+  getState
+) => {
+  try {
+    dispatch({ type: oc.ORDER_PAYMENT_REQUEST });
+
+    const {
+      user: { profile },
+    } = getState();
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${profile.token}`,
+      },
+    };
+
+    const { data } = await axios.put(
+      `/api/orders/${orderID}/pay`,
+      paymentResult,
+      config
+    );
+
+    dispatch({ type: oc.ORDER_PAYMENT_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: oc.ORDER_PAYMENT_FAILURE,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};

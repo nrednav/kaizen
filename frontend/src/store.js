@@ -11,7 +11,11 @@ import {
   shippingAddressReducer,
   paymentMethodReducer,
 } from './reducers/checkout';
-import { createdOrderReducer, fetchedOrderReducer } from './reducers/order';
+import {
+  createdOrderReducer,
+  fetchedOrderReducer,
+  orderPaymentReducer,
+} from './reducers/order';
 
 const reducers = combineReducers({
   productList: productListReducer,
@@ -25,6 +29,7 @@ const reducers = combineReducers({
   }),
   createdOrder: createdOrderReducer,
   fetchedOrder: fetchedOrderReducer,
+  orderPayment: orderPaymentReducer,
 });
 
 const cartItemsFromStorage = localStorage.getItem('cartItems')
