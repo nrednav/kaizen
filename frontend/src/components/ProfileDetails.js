@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
-import { generateFormField } from '../../utils/formUtils';
+import { generateFormField } from '../utils/formUtils';
 
-import { fetchProfile, updateProfile } from '../../actions/userProfile';
+import { fetchProfile, updateProfile } from '../actions/userProfile';
 
-import Alert from '../../components/Alert';
-import Loader from '../../components/Loader';
+import Alert from './Alert';
+import Loader from './Loader';
 
-const UserProfileDetails = () => {
+const ProfileDetails = () => {
   const dispatch = useDispatch();
   const userProfile = useSelector((state) => state.userProfile);
   const { loading, success, error, profile } = userProfile;
@@ -126,4 +126,4 @@ const UserProfileDetails = () => {
   );
 };
 
-export default UserProfileDetails;
+export default ProfileDetails;

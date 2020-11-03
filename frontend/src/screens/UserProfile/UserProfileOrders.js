@@ -30,7 +30,10 @@ const UserProfileOrders = () => {
             <div className='flex flex-col'>
               {buildHeaderRow()}
               {orders.map((order) => (
-                <div key={order._id} className='flex flex-row h-16 bg-gray-300'>
+                <div
+                  key={order._id}
+                  className='flex flex-row h-16 bg-gray-300 hover:bg-gray-100'
+                >
                   {buildCell(<p className='truncate'>{order._id}</p>, '')}
                   {buildCell(order.createdAt.substring(0, 10), 'truncate')}
                   {buildCell(`$${order.totalPrice}`, 'hidden lg:flex')}
@@ -56,10 +59,11 @@ const UserProfileOrders = () => {
                   )}
                   {buildCell(
                     <button
-                      className='hover:opacity-75  w-full h-full text-gray-800'
+                      className='hover:opacity-75  w-full h-full text-gray-800 flex items-center justify-center'
                       onClick={() => history.push(`/orders/${order._id}`)}
                     >
-                      View
+                      <i className='text-2xl ri-eye-fill mx-2'></i>
+                      <p className='mx-2'>View</p>
                     </button>,
                     'justify-center'
                   )}
@@ -81,7 +85,7 @@ const buildHeaderRow = () => {
       {buildCell('Total', 'font-semibold hidden lg:flex')}
       {buildCell('Paid', 'font-semibold hidden lg:flex')}
       {buildCell('Delivered', 'font-semibold hidden lg:flex')}
-      {buildCell('', '')}
+      {buildCell('Actions', 'font-semibold')}
     </div>
   );
 };

@@ -1,15 +1,24 @@
-import React, { useState } from 'react';
-import { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
 import Sidebar from '../../components/Sidebar';
-import UserProfileMain from './UserProfileMain';
+import Main from './Main';
 
 const sidebarMenuItems = {
   details: {
     icon: 'ri-pencil-fill',
     label: 'Details',
     id: 'sidebar-menu-details',
+  },
+  users: {
+    icon: 'ri-user-fill',
+    label: 'Users',
+    id: 'sidebar-menu-users',
+  },
+  products: {
+    icon: 'ri-archive-fill',
+    label: 'Products',
+    id: 'sidebar-menu-products',
   },
   orders: {
     icon: 'ri-bill-fill',
@@ -18,7 +27,7 @@ const sidebarMenuItems = {
   },
 };
 
-const UserProfile = () => {
+const AdminProfile = () => {
   const location = useLocation();
 
   const [activeItem, setActiveItem] = useState(sidebarMenuItems['details']);
@@ -53,9 +62,9 @@ const UserProfile = () => {
           className={`${mobileSidebar ? 'ri-close-line' : 'ri-menu-3-line'}`}
         ></i>
       </button>
-      <UserProfileMain activeItem={activeItem} />
+      <Main activeItem={activeItem} />
     </div>
   );
 };
 
-export default UserProfile;
+export default AdminProfile;
