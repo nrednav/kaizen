@@ -17,8 +17,6 @@ export const fetchUsers = () => async (dispatch, getState) => {
 
     let { data } = await axios.get('/api/users', config);
 
-    data = data.filter((user) => user._id !== profile._id);
-
     dispatch({ type: ac.FETCH_USERS_SUCCESS, payload: data });
   } catch (error) {
     dispatch({
@@ -33,7 +31,7 @@ export const fetchUsers = () => async (dispatch, getState) => {
 
 export const deleteUser = (id) => async (dispatch, getState) => {
   try {
-    dispatch({ type: ac.USER_DELETE_REQUEST });
+    dispatch({ type: ac.DELETE_USER_REQUEST });
 
     const {
       user: { profile },
@@ -45,12 +43,41 @@ export const deleteUser = (id) => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.delete(`/api/users/${id}`, config);
+    await axios.delete(`/api/users/${id}`, config);
 
-    dispatch({ type: ac.USER_DELETE_SUCCESS });
+    dispatch({ type: ac.DELETE_USER_SUCCESS });
   } catch (error) {
     dispatch({
-      type: ac.USER_DELETE_FAILURE,
+      type: ac.DELETE_USER_FAILURE,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const updateUser = (user) => async (dispatch, getState) => {
+  try {
+    dispatch({ type: ac.UPDATE_USER_REQUEST });
+
+    const {
+      user: { profile },
+    } = getState();
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${profile.token}`,
+      },
+    };
+
+    await axios.put(`/api/users/${user._id}`, user, config);
+
+    dispatch({ type: ac.UPDATE_USER_SUCCESS });
+  } catch (error) {
+    dispatch({
+      type: ac.UPDATE_USER_FAILURE,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message
