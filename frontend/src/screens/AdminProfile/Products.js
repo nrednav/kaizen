@@ -1,12 +1,17 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { deleteProduct, fetchProducts } from '../../actions/product';
 
 import Alert from '../../components/Alert';
 import Loader from '../../components/Loader';
 
 const Products = () => {
-  const createProductHandler = () => {};
+  const history = useHistory();
+
+  const createProductHandler = () => {
+    history.push('/products/create');
+  };
 
   return (
     <div className='flex flex-col'>
@@ -38,6 +43,8 @@ const HeaderRow = () => {
 
 const ProductList = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
+
   const productList = useSelector((state) => state.productList);
   const { loading, error, products } = productList;
 
@@ -51,7 +58,7 @@ const ProductList = () => {
   const actionHandler = (type, id) => {
     switch (type) {
       case 'edit':
-        console.log('edit');
+        history.push(`/products/${id}/edit`);
         break;
       case 'remove':
         if (window.confirm(`Are you sure you wish to remove product: ${id}?`)) {

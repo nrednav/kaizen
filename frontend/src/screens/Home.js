@@ -17,7 +17,7 @@ const Home = () => {
 
   return (
     <>
-      <h1 className='mt-4 text-center text-3xl'>Latest Products</h1>
+      <h1 className='mt-4 text-4xl text-center'>Latest Products</h1>
       {loading ? (
         <Loader />
       ) : error ? (

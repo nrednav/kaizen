@@ -13,7 +13,7 @@ const Product = ({ product }) => {
         />
         <div className='bg-gray-800 p-4'>
           <div className='text-xl mb-2 text-gray-200'>
-            {product.name} -{' '}
+            <p>{product.name}</p>
             <span className='text-green-400'>${product.price}</span>
           </div>
           <Rating

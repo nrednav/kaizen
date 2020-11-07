@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 import Header from './components/Header';
@@ -17,6 +17,8 @@ import Shipping from './screens/Shipping/Shipping';
 import Payment from './screens/Payment/Payment';
 import OrderPlacement from './screens/Order/OrderPlacement';
 import ViewOrder from './screens/Order/ViewOrder';
+import CreateProduct from './screens/CreateProduct';
+import EditProduct from './screens/EditProduct';
 
 const App = () => {
   const user = useSelector((state) => state.user);
@@ -28,7 +30,6 @@ const App = () => {
         <Header />
         <main className='mb-auto'>
           <Route path='/' component={Home} exact />
-          <Route path='/products/:id' component={ViewProduct} />
           <Route path='/cart/:id?' component={Cart} />
           <Route path='/login' component={Login} />
           <Route path='/register' component={Register} />
@@ -40,6 +41,11 @@ const App = () => {
           <ProtectedRoute path='/payment' component={Payment} />
           <ProtectedRoute path='/order' component={OrderPlacement} />
           <ProtectedRoute path='/orders/:id' component={ViewOrder} />
+          <Switch>
+            <ProtectedRoute path='/products/create' component={CreateProduct} />
+            <ProtectedRoute path='/products/:id/edit' component={EditProduct} />
+            <Route path='/products/:id' component={ViewProduct} />
+          </Switch>
         </main>
         <Footer />
       </div>

@@ -1,8 +1,8 @@
 import React from 'react';
 
-export const generateFormField = (field, register, errors) => {
+export const generateFormField = (field, register, errors, className = '') => {
   return (
-    <div className='flex flex-col mt-4' key={field.label}>
+    <div className={`flex flex-col mt-4 ${className}`} key={field.label}>
       <label className='block text-lg text-gray-800 font-semibold mb-2'>
         {field.label}
       </label>

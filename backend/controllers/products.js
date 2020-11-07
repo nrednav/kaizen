@@ -36,4 +36,75 @@ const deleteProduct = asyncHandler(async (req, res) => {
   }
 });
 
-export { getProducts, getProductByID, deleteProduct };
+// @desc    Create a product
+// @route   POST /api/products/
+// @access  Private/Admin
+const createProduct = asyncHandler(async (req, res) => {
+  const productExists = await Product.findOne({ name: req.body.name });
+
+  if (productExists) {
+    res.status(400);
+    throw new Error('Product already exists');
+  } else {
+    const product = await Product.create({
+      user: req.user._id,
+      name: req.body.name,
+      price: req.body.price,
+      description: req.body.description,
+      category: req.body.category,
+      brand: req.body.brand,
+      countInStock: req.body.countInStock,
+      image: req.body.image,
+      numReviews: 0,
+    });
+
+    if (product) {
+      res.status(201);
+      res.json(product);
+    } else {
+      res.status(400);
+      throw new Error('Invalid product data');
+    }
+  }
+});
+
+// @desc    Update a product
+// @route   PUT /api/products/:id
+// @access  Private/Admin
+const updateProduct = asyncHandler(async (req, res) => {
+  const {
+    name,
+    price,
+    description,
+    category,
+    brand,
+    countInStock,
+    image,
+  } = req.body;
+
+  const product = await Product.findById(req.params.id);
+
+  if (product) {
+    product.name = name;
+    product.price = price;
+    product.description = description;
+    product.category = category;
+    product.brand = brand;
+    product.countInStock = countInStock;
+    product.image = image;
+
+    const updatedProduct = await product.save();
+    res.json(updatedProduct);
+  } else {
+    res.status(404);
+    throw new Error('Product not found');
+  }
+});
+
+export {
+  getProducts,
+  getProductByID,
+  deleteProduct,
+  createProduct,
+  updateProduct,
+};
