@@ -3,55 +3,11 @@ import { useForm } from 'react-hook-form';
 import { generateFormField } from '../utils/formUtils';
 
 const formFields = {
-  left: [
-    {
-      label: 'Name',
-      type: 'text',
-      value: '',
-      validation: { required: 'Field required' },
-    },
-    {
-      label: 'Price',
-      type: 'text',
-      value: '0',
-      validation: { required: 'Field required' },
-    },
-    {
-      label: 'Description',
-      type: 'text',
-      value: '',
-      validation: { required: 'Field required' },
-    },
-    {
-      label: 'Category',
-      type: 'text',
-      value: '',
-      validation: { required: 'Field required' },
-    },
-  ],
-  right: [
-    {
-      label: 'Brand',
-      type: 'text',
-      value: '',
-      validation: { required: 'Field required' },
-    },
-    {
-      label: 'Count In Stock',
-      type: 'text',
-      value: '0',
-      validation: { required: 'Field required' },
-    },
-    {
-      label: 'Image URL',
-      type: 'text',
-      value: '',
-      validation: { required: 'Field required' },
-    },
-  ],
+  left: ['Name', 'Price', 'Description', 'Category'],
+  right: ['Brand', 'Count In Stock', 'Image URL'],
 };
 
-const CreateProduct = () => {
+const CreateProduct = ({ history }) => {
   const { register, handleSubmit, errors, clearErrors } = useForm();
 
   const onFormSubmit = (data) => {
@@ -65,14 +21,32 @@ const CreateProduct = () => {
 
   return (
     <div className='flex flex-col'>
-      <h1 className='py-4 px-8 text-4xl'>Create Product</h1>
+      <div className='flex flex-row'>
+        <button
+          className='bg-transparent font-semibold uppercase hover:opacity-75  outline-none py-4 px-8 text-4xl'
+          onClick={() => history.go(-1)}
+        >
+          <i className='ri-arrow-left-line'></i>
+        </button>
+        <h1 className='py-4 text-4xl'>Create Product</h1>
+      </div>
       <form
         onSubmit={handleSubmit(onFormSubmit)}
         className='px-8 flex md:flex-row flex-col mb-8'
       >
         <div className='flex flex-col w-full md:max-w-md'>
           {formFields['left'].map((field) =>
-            generateFormField(field, register, errors, '')
+            generateFormField(
+              {
+                label: field,
+                type: 'text',
+                value: '',
+                validation: { required: 'Field Required' },
+              },
+              register,
+              errors,
+              ''
+            )
           )}
           <button
             type='submit'
@@ -83,7 +57,16 @@ const CreateProduct = () => {
         </div>
         <div className='flex flex-col w-full md:max-w-md md:ml-16'>
           {formFields['right'].map((field) =>
-            generateFormField(field, register, errors)
+            generateFormField(
+              {
+                label: field,
+                type: 'text',
+                value: '',
+                validation: { required: 'Field Required' },
+              },
+              register,
+              errors
+            )
           )}
           <button
             type='submit'

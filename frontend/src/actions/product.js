@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 import * as pc from '../constants/product';
+import * as ac from '../constants/admin';
 
 export const fetchProducts = () => async (dispatch) => {
   try {
@@ -36,7 +37,7 @@ export const fetchProduct = (id) => async (dispatch) => {
 
 export const deleteProduct = (id) => async (dispatch, getState) => {
   try {
-    dispatch({ type: pc.DELETE_PRODUCT_REQUEST });
+    dispatch({ type: ac.DELETE_PRODUCT_REQUEST });
 
     const {
       user: { profile },
@@ -50,10 +51,10 @@ export const deleteProduct = (id) => async (dispatch, getState) => {
 
     await axios.delete(`/api/products/${id}`, config);
 
-    dispatch({ type: pc.DELETE_PRODUCT_SUCCESS });
+    dispatch({ type: ac.DELETE_PRODUCT_SUCCESS });
   } catch (error) {
     dispatch({
-      type: pc.DELETE_PRODUCT_FAILURE,
+      type: ac.DELETE_PRODUCT_FAILURE,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

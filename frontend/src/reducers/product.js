@@ -28,16 +28,3 @@ export const productDetailsReducer = (
       return state;
   }
 };
-
-export const productDeleteReducer = (state = {}, action) => {
-  switch (action.type) {
-    case pc.DELETE_PRODUCT_REQUEST:
-      return { loading: true, ...state };
-    case pc.DELETE_PRODUCT_SUCCESS:
-      return { loading: false, success: true };
-    case pc.DELETE_PRODUCT_FAILURE:
-      return { loading: false, error: action.payload };
-    default:
-      return state;
-  }
-};
