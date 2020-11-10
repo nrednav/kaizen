@@ -4,6 +4,8 @@ import { useHistory } from 'react-router-dom';
 import { fetchUserOrders } from '../../actions/order';
 import Loader from '../../components/Loader';
 
+import { FadeTransition } from '../../animations/FadeTransition';
+
 const UserProfileOrders = () => {
   const dispatch = useDispatch();
   const history = useHistory();
@@ -16,7 +18,7 @@ const UserProfileOrders = () => {
   }, [dispatch]);
 
   return (
-    <div>
+    <FadeTransition>
       {loading ? (
         <Loader />
       ) : (
@@ -73,7 +75,7 @@ const UserProfileOrders = () => {
           )}
         </>
       )}
-    </div>
+    </FadeTransition>
   );
 };
 

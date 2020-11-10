@@ -5,6 +5,8 @@ import Loader from '../../components/Loader';
 import Alert from '../../components/Alert';
 import Switch from 'react-switch';
 
+import { FadeTransition } from '../../animations/FadeTransition';
+
 const Users = () => {
   const dispatch = useDispatch();
 
@@ -41,7 +43,7 @@ const Users = () => {
   };
 
   return (
-    <div>
+    <FadeTransition>
       {loading || deleteUserLoading ? (
         <Loader />
       ) : fetchUsersError ? (
@@ -55,7 +57,7 @@ const Users = () => {
       ) : (
         <>{content[activeComponent]}</>
       )}
-    </div>
+    </FadeTransition>
   );
 };
 

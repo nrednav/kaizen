@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
-import Rating from '../components/Rating';
-import Loader from '../components/Loader';
-import Alert from '../components/Alert';
+import Rating from '../../components/Rating';
+import Loader from '../../components/Loader';
+import Alert from '../../components/Alert';
 
-import { fetchProduct } from '../actions/product';
+import { fetchProduct } from '../../actions/product';
 
 const ViewProduct = ({ history, match }) => {
   const [quantity, setQuantity] = useState(1);
@@ -14,6 +14,9 @@ const ViewProduct = ({ history, match }) => {
   const dispatch = useDispatch();
   const productDetails = useSelector((state) => state.productDetails);
   const { loading, error, product } = productDetails;
+
+  const user = useSelector((state) => state.user);
+  const { profile } = user;
 
   useEffect(() => {
     dispatch(fetchProduct(match.params.id));
@@ -103,10 +106,14 @@ const ViewProduct = ({ history, match }) => {
               <button
                 onClick={() => addToCartHandler()}
                 className={
-                  `${product.countInStock === 0 ? 'cursor-not-allowed' : ''}` +
+                  `${
+                    product.countInStock === 0 || profile.isAdmin
+                      ? 'cursor-not-allowed'
+                      : ''
+                  }` +
                   ' text-base uppercase border w-1/2 my-4 h-12 text-white bg-gray-800 hover:opacity-75 rounded-lg'
                 }
-                disabled={product.countInStock === 0}
+                disabled={product.countInStock === 0 || profile.isAdmin}
               >
                 Add to cart
               </button>

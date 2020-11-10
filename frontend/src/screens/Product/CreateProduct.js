@@ -1,6 +1,6 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { generateFormField } from '../utils/formUtils';
+import { generateFormField } from '../../utils/formUtils';
 
 const formFields = {
   left: ['Name', 'Price', 'Description', 'Category'],
@@ -8,7 +8,7 @@ const formFields = {
 };
 
 const CreateProduct = ({ history }) => {
-  const { register, handleSubmit, errors, clearErrors } = useForm();
+  const { register, handleSubmit, errors } = useForm();
 
   const onFormSubmit = (data) => {
     console.log(data);

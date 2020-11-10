@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { deleteProduct, fetchProducts } from '../../actions/product';
+import { FadeTransition } from '../../animations/FadeTransition';
 
 import Alert from '../../components/Alert';
 import Loader from '../../components/Loader';
@@ -14,19 +15,21 @@ const Products = () => {
   };
 
   return (
-    <div className='flex flex-col'>
-      <button
-        className='self-start mb-4 py-2 px-4 bg-gray-900 text-white hover:bg-opacity-75'
-        onClick={createProductHandler}
-      >
-        <span className='uppercase flex items-center'>
-          <i className='ri-add-line text-xl pr-2'></i> Create Product
-        </span>
-      </button>
-      <div>
-        <ProductList />
+    <FadeTransition>
+      <div className='flex flex-col'>
+        <button
+          className='self-start mb-4 py-2 px-4 bg-gray-900 text-white hover:bg-opacity-75'
+          onClick={createProductHandler}
+        >
+          <span className='uppercase flex items-center'>
+            <i className='ri-add-line text-xl pr-2'></i> Create Product
+          </span>
+        </button>
+        <div>
+          <ProductList />
+        </div>
       </div>
-    </div>
+    </FadeTransition>
   );
 };
 

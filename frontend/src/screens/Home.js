@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { fetchProducts } from '../actions/product';
+
 import Product from '../components/Product';
 import Loader from '../components/Loader';
 import Alert from '../components/Alert';
-
-import { fetchProducts } from '../actions/product';
 
 const Home = () => {
   const dispatch = useDispatch();

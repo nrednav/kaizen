@@ -11,6 +11,9 @@ const Cart = ({ match, location, history }) => {
   const cart = useSelector((state) => state.cart);
   const { items } = cart;
 
+  const user = useSelector((state) => state.user);
+  const { profile } = user;
+
   const dispatch = useDispatch();
   useEffect(() => {
     if (productID) {
@@ -122,10 +125,14 @@ const Cart = ({ match, location, history }) => {
             <button
               onClick={() => checkoutHandler()}
               className={
-                `${items.length === 0 ? 'cursor-not-allowed' : ''}` +
+                `${
+                  items.length === 0 || profile.isAdmin
+                    ? 'cursor-not-allowed'
+                    : ''
+                }` +
                 ' text-base uppercase border w-3/4 h-12 px-4 text-white bg-gray-800 hover:opacity-75'
               }
-              disabled={items.length === 0}
+              disabled={items.length === 0 || profile.isAdmin}
             >
               Proceed to checkout
             </button>

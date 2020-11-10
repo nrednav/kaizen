@@ -12,6 +12,7 @@ import { FETCH_PROFILE_RESET } from '../constants/userProfile';
 import axios from 'axios';
 import { FETCH_USER_ORDERS_RESET } from '../constants/order';
 import { FETCH_ORDERS_RESET, FETCH_USERS_RESET } from '../constants/admin';
+import { RESET_SHIPPING_ADDRESS } from '../constants/checkout';
 
 export const login = (email, password) => async (dispatch) => {
   try {
@@ -80,5 +81,6 @@ export const logout = () => (dispatch) => {
   dispatch({ type: FETCH_USER_ORDERS_RESET });
   dispatch({ type: FETCH_USERS_RESET });
   dispatch({ type: FETCH_ORDERS_RESET });
+  dispatch({ type: RESET_SHIPPING_ADDRESS });
   dispatch({ type: USER_LOGOUT_REQUEST });
 };

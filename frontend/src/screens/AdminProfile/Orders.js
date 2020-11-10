@@ -1,7 +1,8 @@
 import React from 'react';
+import { FadeTransition } from '../../animations/FadeTransition';
 
 const Orders = () => {
-  return <div></div>;
+  return <FadeTransition></FadeTransition>;
 };
 
 export default Orders;

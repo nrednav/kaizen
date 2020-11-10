@@ -7,6 +7,7 @@ import { fetchProfile, updateProfile } from '../actions/userProfile';
 
 import Alert from './Alert';
 import Loader from './Loader';
+import { FadeTransition } from '../animations/FadeTransition';
 
 const ProfileDetails = () => {
   const dispatch = useDispatch();
@@ -83,7 +84,7 @@ const ProfileDetails = () => {
   };
 
   return (
-    <>
+    <FadeTransition>
       {success && (
         <div className='flex justify-center py-4'>
           <Alert
@@ -122,7 +123,7 @@ const ProfileDetails = () => {
           </form>
         )
       )}
-    </>
+    </FadeTransition>
   );
 };
 

@@ -1,12 +1,12 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { Switch } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 import Header from './components/Header';
 import Footer from './components/Footer';
 
 import Home from './screens/Home';
-import ViewProduct from './screens/ViewProduct';
+import ViewProduct from './screens/Product/ViewProduct';
 import Cart from './screens/Cart';
 import Login from './screens/Login';
 import Register from './screens/Register';
@@ -17,39 +17,64 @@ import Shipping from './screens/Shipping/Shipping';
 import Payment from './screens/Payment/Payment';
 import OrderPlacement from './screens/Order/OrderPlacement';
 import ViewOrder from './screens/Order/ViewOrder';
-import CreateProduct from './screens/CreateProduct';
-import EditProduct from './screens/EditProduct';
+import CreateProduct from './screens/Product/CreateProduct';
+import EditProduct from './screens/Product/EditProduct';
+
+import { AnimatedRoutes, RouteTransition } from './animations/animations';
 
 const App = () => {
   const user = useSelector((state) => state.user);
   const { profile } = user;
 
   return (
-    <Router>
-      <div className='min-h-screen flex flex-col justify-between bg-gray-200'>
-        <Header />
-        <main className='mb-auto'>
-          <Route path='/' component={Home} exact />
-          <Route path='/cart/:id?' component={Cart} />
-          <Route path='/login' component={Login} />
-          <Route path='/register' component={Register} />
+    <div className='min-h-screen flex flex-col justify-between bg-gray-200'>
+      <Header />
+      <main className='mb-auto'>
+        <AnimatedRoutes>
+          <RouteTransition path='/' exact component={Home} />
+          <RouteTransition path='/cart/:id?' component={Cart} />
+          <RouteTransition path='/login' component={Login} />
+          <RouteTransition path='/register' component={Register} />
           <ProtectedRoute
+            protect={true}
             path='/profile'
             component={profile && profile.isAdmin ? AdminProfile : UserProfile}
           />
-          <ProtectedRoute path='/shipping' component={Shipping} />
-          <ProtectedRoute path='/payment' component={Payment} />
-          <ProtectedRoute path='/order' component={OrderPlacement} />
-          <ProtectedRoute path='/orders/:id' component={ViewOrder} />
+          <RouteTransition
+            protect={true}
+            path='/shipping'
+            component={Shipping}
+          />
+          <RouteTransition protect={true} path='/payment' component={Payment} />
+          <RouteTransition
+            protect={true}
+            path='/order'
+            component={OrderPlacement}
+          />
+          <RouteTransition
+            protect={true}
+            path='/orders/:id'
+            component={ViewOrder}
+          />
           <Switch>
-            <ProtectedRoute path='/products/create' component={CreateProduct} />
-            <ProtectedRoute path='/products/:id/edit' component={EditProduct} />
-            <Route path='/products/:id' component={ViewProduct} />
+            <RouteTransition
+              protect={true}
+              path='/products/create'
+              component={CreateProduct}
+            />
+            {profile && profile.isAdmin && (
+              <RouteTransition
+                protect={true}
+                path='/products/:id/edit'
+                component={EditProduct}
+              />
+            )}
+            <RouteTransition path='/products/:id' component={ViewProduct} />
           </Switch>
-        </main>
-        <Footer />
-      </div>
-    </Router>
+        </AnimatedRoutes>
+      </main>
+      <Footer />
+    </div>
   );
 };
 
