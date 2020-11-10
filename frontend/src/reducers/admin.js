@@ -79,6 +79,8 @@ export const productUpdateReducer = (state = {}, action) => {
       return { loading: false, success: true };
     case ac.UPDATE_PRODUCT_FAILURE:
       return { loading: false, error: action.payload };
+    case ac.UPDATE_PRODUCT_RESET:
+      return {};
     default:
       return state;
   }

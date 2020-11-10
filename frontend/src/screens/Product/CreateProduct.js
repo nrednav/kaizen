@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { createProduct } from '../../actions/admin/product';
 import { generateFormField } from '../../utils/formUtils';
-import { formFields } from './data/createProductFields';
+import { formFields } from './data/formFields';
 
 import Alert from '../../components/Alert';
 import Loader from '../../components/Loader';
@@ -41,12 +41,12 @@ const CreateProduct = ({ history }) => {
     <div className='flex flex-col'>
       <div className='flex flex-row'>
         <button
-          className='bg-transparent font-semibold uppercase hover:opacity-75  outline-none py-4 px-8 text-4xl'
+          className='bg-transparent font-semibold uppercase hover:opacity-75  outline-none py-4 px-8 text-4xl absolute'
           onClick={() => history.go(-1)}
         >
           <i className='ri-arrow-left-line'></i>
         </button>
-        <h1 className='py-4 text-4xl'>Create Product</h1>
+        <h1 className='py-4 text-4xl text-center mx-auto'>Create Product</h1>
       </div>
       {error && (
         <div className='flex justify-center py-4'>
