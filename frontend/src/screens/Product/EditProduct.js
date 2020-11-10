@@ -9,6 +9,7 @@ import { formFields } from './data/formFields';
 import Alert from '../../components/Alert';
 import Loader from '../../components/Loader';
 import { UPDATE_PRODUCT_RESET } from '../../constants/admin';
+import { FETCH_PRODUCT_RESET } from '../../constants/product';
 
 const EditProduct = ({ history, match }) => {
   const dispatch = useDispatch();
@@ -23,18 +24,33 @@ const EditProduct = ({ history, match }) => {
   const productUpdate = useSelector((state) => state.admin.productUpdate);
   const {
     loading: productUpdateLoading,
-    success: productUpdateSuccess,
     error: productUpdateError,
+    success: productUpdateSuccess,
+    updatedProduct,
   } = productUpdate;
 
-  const { register, handleSubmit, errors } = useForm({});
+  const { register, handleSubmit, errors, reset } = useForm({});
 
   useEffect(() => {
     dispatch(fetchProduct(match.params.id));
-  }, [dispatch, match, productUpdateSuccess]);
+  }, [dispatch, match]);
+
+  useEffect(() => {
+    if (updatedProduct) {
+      reset({
+        Name: updatedProduct['name'],
+        Price: updatedProduct['price'],
+        Description: updatedProduct['description'],
+        Category: updatedProduct['category'],
+        Brand: updatedProduct['brand'],
+        'Count In Stock': updatedProduct['countInStock'],
+        'Image URL': updatedProduct['image'],
+      });
+    }
+  }, [updatedProduct, reset]);
 
   const onFormSubmit = (data) => {
-    let updatedProduct = {
+    let updatedDetails = {
       countInStock: parseInt(data['Count In Stock']),
       image: data['Image URL'],
       name: data['Name'],
@@ -44,7 +60,7 @@ const EditProduct = ({ history, match }) => {
       brand: data['Brand'],
     };
 
-    dispatch(updateProduct(updatedProduct, match.params.id));
+    dispatch(updateProduct(updatedDetails, match.params.id));
   };
 
   return (
@@ -54,6 +70,7 @@ const EditProduct = ({ history, match }) => {
           className='bg-transparent font-semibold uppercase hover:opacity-75  outline-none py-4 px-8 text-4xl absolute'
           onClick={() => {
             dispatch({ type: UPDATE_PRODUCT_RESET });
+            dispatch({ type: FETCH_PRODUCT_RESET });
             history.go(-1);
           }}
         >
@@ -71,6 +88,15 @@ const EditProduct = ({ history, match }) => {
             />
           </div>
         ))}
+      {productUpdateSuccess && (
+        <div className='flex justify-center py-4'>
+          <Alert
+            variant='success'
+            message='Product details were successfully updated'
+            className='w-3/4'
+          />
+        </div>
+      )}
       {productDetailsLoading || productUpdateLoading ? (
         <Loader />
       ) : (
@@ -81,7 +107,12 @@ const EditProduct = ({ history, match }) => {
           >
             <div className='flex flex-col w-full md:max-w-md'>
               {formFields['left'].map((field) =>
-                generateFormField(field, register, errors, '')
+                generateFormField(
+                  { ...field, value: product[field.label.toLowerCase()] },
+                  register,
+                  errors,
+                  ''
+                )
               )}
               <button
                 type='submit'
@@ -91,9 +122,15 @@ const EditProduct = ({ history, match }) => {
               </button>
             </div>
             <div className='flex flex-col w-full md:max-w-md md:ml-16'>
-              {formFields['right'].map((field) =>
-                generateFormField(field, register, errors)
-              )}
+              {formFields['right'].map((field) => {
+                field.value = product[field.label.toLowerCase()];
+                if (field.label === 'Count In Stock') {
+                  field.value = product['countInStock'];
+                } else if (field.label === 'Image URL') {
+                  field.value = product['image'];
+                }
+                return generateFormField(field, register, errors);
+              })}
               <button
                 type='submit'
                 className='md:hidden w-1/2 mx-auto text-base uppercase border h-12 px-4 my-8 text-white bg-gray-800 hover:opacity-75'

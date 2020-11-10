@@ -76,9 +76,13 @@ export const updateProduct = (product, productID) => async (
       },
     };
 
-    await axios.put(`/api/products/${productID}`, product, config);
+    const { data } = await axios.put(
+      `/api/products/${productID}`,
+      product,
+      config
+    );
 
-    dispatch({ type: ac.UPDATE_PRODUCT_SUCCESS });
+    dispatch({ type: ac.UPDATE_PRODUCT_SUCCESS, payload: data });
   } catch (error) {
     dispatch({
       type: ac.UPDATE_PRODUCT_FAILURE,

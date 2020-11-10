@@ -24,6 +24,8 @@ export const productDetailsReducer = (
       return { loading: false, product: action.payload };
     case pc.FETCH_PRODUCT_FAILURE:
       return { loading: false, error: action.payload };
+    case pc.FETCH_PRODUCT_RESET:
+      return {};
     default:
       return state;
   }

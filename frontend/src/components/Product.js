@@ -11,9 +11,9 @@ const Product = ({ product }) => {
           alt={product.name}
           className='w-64 h-64 object-cover object-center border border-gray-400 hover:opacity-75'
         />
-        <div className='bg-gray-800 p-4'>
+        <div className='bg-gray-800 p-4 w-64'>
           <div className='text-xl mb-2 text-gray-200'>
-            <p>{product.name}</p>
+            <p className='truncate w-full'>{product.name}</p>
             <span className='text-green-400'>${product.price}</span>
           </div>
           <Rating

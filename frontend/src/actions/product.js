@@ -20,6 +20,7 @@ export const fetchProducts = () => async (dispatch) => {
 
 export const fetchProduct = (id) => async (dispatch) => {
   try {
+    dispatch({ type: pc.FETCH_PRODUCT_RESET });
     dispatch({ type: pc.FETCH_PRODUCT_REQUEST });
     const { data } = await axios.get(`/api/products/${id}`);
     dispatch({ type: pc.FETCH_PRODUCT_SUCCESS, payload: data });

@@ -49,7 +49,7 @@ const createProduct = asyncHandler(async (req, res) => {
     const product = await Product.create({
       user: req.user._id,
       name: req.body.name,
-      price: req.body.price,
+      price: parseFloat(req.body.price),
       description: req.body.description,
       category: req.body.category,
       brand: req.body.brand,
@@ -86,7 +86,7 @@ const updateProduct = asyncHandler(async (req, res) => {
 
   if (product) {
     product.name = name;
-    product.price = price;
+    product.price = parseFloat(price);
     product.description = description;
     product.category = category;
     product.brand = brand;

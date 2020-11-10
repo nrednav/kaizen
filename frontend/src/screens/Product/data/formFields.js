@@ -11,7 +11,7 @@ export const formFields = {
     },
     {
       label: 'Description',
-      type: 'text',
+      type: 'textarea',
       validation: { required: 'Field required' },
     },
     {

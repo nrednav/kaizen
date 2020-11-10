@@ -62,7 +62,7 @@ const CreateProduct = ({ history }) => {
         >
           <div className='flex flex-col w-full md:max-w-md'>
             {formFields['left'].map((field) =>
-              generateFormField(field, register, errors, '')
+              generateFormField({ ...field, value: '' }, register, errors, '')
             )}
             <button
               type='submit'
@@ -73,7 +73,7 @@ const CreateProduct = ({ history }) => {
           </div>
           <div className='flex flex-col w-full md:max-w-md md:ml-16'>
             {formFields['right'].map((field) =>
-              generateFormField(field, register, errors)
+              generateFormField({ ...field, value: '' }, register, errors)
             )}
             <button
               type='submit'
