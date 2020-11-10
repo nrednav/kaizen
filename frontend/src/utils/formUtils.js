@@ -7,6 +7,7 @@ export const generateFormField = (field, register, errors, className = '') => {
         {field.label}
       </label>
       <input
+        step={field.step || 1}
         defaultValue={field.value}
         name={field.label}
         type={field.type}

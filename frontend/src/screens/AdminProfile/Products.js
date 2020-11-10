@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { deleteProduct, fetchProducts } from '../../actions/product';
+import { fetchProducts } from '../../actions/product';
+import { deleteProduct } from '../../actions/admin/product';
 import { FadeTransition } from '../../animations/FadeTransition';
 
 import Alert from '../../components/Alert';

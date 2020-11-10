@@ -1,5 +1,5 @@
 import axios from 'axios';
-import * as ac from '../constants/admin';
+import * as ac from '../../constants/admin';
 
 export const fetchUsers = () => async (dispatch, getState) => {
   try {

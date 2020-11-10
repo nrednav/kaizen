@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { deleteUser, fetchUsers, updateUser } from '../../actions/admin';
+import { deleteUser, fetchUsers, updateUser } from '../../actions/admin/user';
 import Loader from '../../components/Loader';
 import Alert from '../../components/Alert';
 import Switch from 'react-switch';
