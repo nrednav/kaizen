@@ -1,6 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
+
+import axios from 'axios';
+
 import { updateProduct } from '../../actions/admin/product';
 import { fetchProduct } from '../../actions/product';
 import { generateFormField } from '../../utils/formUtils';
@@ -15,7 +18,7 @@ const EditProduct = ({ history, match }) => {
   const dispatch = useDispatch();
 
   const productDetails = useSelector((state) => state.productDetails);
-  const {
+  let {
     loading: productDetailsLoading,
     error: productDetailsError,
     product,
@@ -29,7 +32,11 @@ const EditProduct = ({ history, match }) => {
     updatedProduct,
   } = productUpdate;
 
+  const { profile } = useSelector((state) => state.user);
+
   const { register, handleSubmit, errors, reset } = useForm({});
+
+  const [uploading, setUploading] = useState(false);
 
   useEffect(() => {
     dispatch(fetchProduct(match.params.id));
@@ -61,6 +68,30 @@ const EditProduct = ({ history, match }) => {
     };
 
     dispatch(updateProduct(updatedDetails, match.params.id));
+  };
+
+  const uploadFileHandler = async (e) => {
+    const file = e.target.files[0];
+    const formData = new FormData();
+    formData.append('image', file);
+    setUploading(true);
+
+    try {
+      const config = {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          Authorization: `Bearer ${profile.token}`,
+        },
+      };
+
+      const { data } = await axios.post('/api/upload', formData, config);
+
+      product['image'] = data;
+      setUploading(false);
+    } catch (error) {
+      setUploading(false);
+      console.error(error);
+    }
   };
 
   return (
@@ -97,7 +128,7 @@ const EditProduct = ({ history, match }) => {
           />
         </div>
       )}
-      {productDetailsLoading || productUpdateLoading ? (
+      {productDetailsLoading || productUpdateLoading || uploading ? (
         <Loader />
       ) : (
         product && (
@@ -128,6 +159,10 @@ const EditProduct = ({ history, match }) => {
                   field.value = product['countInStock'];
                 } else if (field.label === 'Image URL') {
                   field.value = product['image'];
+                }
+
+                if (field.label === 'Image Upload') {
+                  field.callback = uploadFileHandler;
                 }
                 return generateFormField(field, register, errors);
               })}

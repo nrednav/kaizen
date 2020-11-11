@@ -106,7 +106,10 @@ const ProductList = () => {
                     <p className='truncate'>{product.name}</p>,
                     'lg:w-3/12'
                   )}
-                  {buildCell(`$${product.price}`, 'hidden lg:flex lg:w-3/12')}
+                  {buildCell(
+                    `$${parseFloat(product.price).toFixed(2)}`,
+                    'hidden lg:flex lg:w-3/12'
+                  )}
                   {buildCell(
                     <div className='h-full w-full flex items-center justify-center'>
                       <button

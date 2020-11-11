@@ -1,6 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
+
+import axios from 'axios';
+
 import { createProduct } from '../../actions/admin/product';
 import { generateFormField } from '../../utils/formUtils';
 import { formFields } from './data/formFields';
@@ -16,6 +19,11 @@ const CreateProduct = ({ history }) => {
   const productCreate = useSelector((state) => state.admin.productCreate);
   const { loading, success, error } = productCreate;
 
+  const { profile } = useSelector((state) => state.user);
+
+  const [uploading, setUploading] = useState(false);
+  const [imageUrl, setImageUrl] = useState('');
+
   useEffect(() => {
     if (success) {
       history.push('/profile/products');
@@ -26,7 +34,7 @@ const CreateProduct = ({ history }) => {
   const onFormSubmit = (data) => {
     let product = {
       countInStock: parseInt(data['Count In Stock']),
-      image: data['Image URL'],
+      image: imageUrl,
       name: data['Name'],
       price: parseFloat(data['Price']),
       description: data['Description'],
@@ -35,6 +43,29 @@ const CreateProduct = ({ history }) => {
     };
 
     dispatch(createProduct(product));
+  };
+
+  const uploadFileHandler = async (e) => {
+    const file = e.target.files[0];
+    const formData = new FormData();
+    formData.append('image', file);
+    setUploading(true);
+
+    try {
+      const config = {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          Authorization: `Bearer ${profile.token}`,
+        },
+      };
+
+      const { data } = await axios.post('/api/upload', formData, config);
+      setImageUrl(data);
+      setUploading(false);
+    } catch (error) {
+      setUploading(false);
+      console.error(error);
+    }
   };
 
   return (
@@ -53,10 +84,11 @@ const CreateProduct = ({ history }) => {
           <Alert variant='error' message={error} className='w-3/4' />
         </div>
       )}
-      {loading ? (
+      {loading || uploading ? (
         <Loader />
       ) : (
         <form
+          id='create-product-form'
           onSubmit={handleSubmit(onFormSubmit)}
           className='px-8 flex md:flex-row flex-col mb-8 md:justify-center'
         >
@@ -72,9 +104,14 @@ const CreateProduct = ({ history }) => {
             </button>
           </div>
           <div className='flex flex-col w-full md:max-w-md md:ml-16'>
-            {formFields['right'].map((field) =>
-              generateFormField({ ...field, value: '' }, register, errors)
-            )}
+            {formFields['right'].map((field) => {
+              if (field.label === 'Image Upload')
+                field.callback = uploadFileHandler;
+
+              field.value = '';
+              if (field.label === 'Image URL') field.value = imageUrl;
+              return generateFormField(field, register, errors);
+            })}
             <button
               type='submit'
               className='md:hidden w-1/2 mx-auto text-base uppercase border h-12 px-4 my-8 text-white bg-gray-800 hover:opacity-75'

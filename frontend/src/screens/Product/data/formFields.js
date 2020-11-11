@@ -42,5 +42,9 @@ export const formFields = {
       type: 'text',
       validation: { required: 'Field Required' },
     },
+    {
+      label: 'Image Upload',
+      type: 'file',
+    },
   ],
 };

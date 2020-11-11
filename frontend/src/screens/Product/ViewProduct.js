@@ -67,6 +67,7 @@ const ViewProduct = ({ history, match }) => {
                   </span>
                 </div>
               )}
+              <div className='text-2xl mt-4 lg:mt-0'>{product.brand}</div>
               <div className='text-4xl mt-4 lg:mt-0'>
                 ${parseFloat(product.price).toFixed(2)}
               </div>
@@ -77,7 +78,9 @@ const ViewProduct = ({ history, match }) => {
             <div className='product-actions border border-gray-800 text-xl font-semibold my-16 lg:mt-0 w-8/12 sm:w-6/12 md:w-4/12 lg:w-3/12 lg:mr-16 mx-auto'>
               <div className='flex items-center justify-between px-4 border-b-2 border-gray-400 h-12'>
                 <p>Price:</p>
-                <p className='font-normal'>${product.price}</p>
+                <p className='font-normal'>
+                  ${parseFloat(product.price).toFixed(2)}
+                </p>
               </div>
               <div className='flex items-center justify-between px-4 border-b-2 border-gray-400 h-12'>
                 <p>Status:</p>
@@ -114,7 +117,7 @@ const ViewProduct = ({ history, match }) => {
                         ? 'cursor-not-allowed'
                         : ''
                     }` +
-                    ' text-base uppercase border w-1/2 my-4 h-12 text-white bg-gray-800 hover:opacity-75 rounded-lg'
+                    ' text-base uppercase border w-1/2 my-4 h-12 text-white bg-gray-800 hover:opacity-75'
                   }
                   disabled={product.countInStock === 0 || profile.isAdmin}
                 >
