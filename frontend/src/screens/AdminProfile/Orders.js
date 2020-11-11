@@ -1,8 +1,122 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+
+import { fetchOrders } from '../../actions/admin/order';
+
+import Alert from '../../components/Alert';
+import Loader from '../../components/Loader';
 import { FadeTransition } from '../../animations/FadeTransition';
 
 const Orders = () => {
-  return <FadeTransition></FadeTransition>;
+  return (
+    <FadeTransition>
+      <div className='flex flex-col'>
+        <OrderList />
+      </div>
+    </FadeTransition>
+  );
+};
+
+const HeaderRow = () => {
+  return (
+    <div className='flex flex-row justify-start h-12'>
+      {buildCell('ID', 'font-semibold')}
+      {buildCell('Date', 'font-semibold')}
+      {buildCell('Total', 'font-semibold hidden lg:flex')}
+      {buildCell('Paid', 'font-semibold hidden lg:flex')}
+      {buildCell('Delivered', 'font-semibold hidden lg:flex')}
+      {buildCell('Actions', 'font-semibold')}
+    </div>
+  );
+};
+
+const buildCell = (value, extraStyles = '') => {
+  return (
+    <div
+      className={`border border-gray-400 w-4/12 lg:w-2/12 px-4 py-2 h-full flex items-center justify-center ${extraStyles}`}
+    >
+      {value}
+    </div>
+  );
+};
+
+const OrderList = () => {
+  const dispatch = useDispatch();
+  const history = useHistory();
+
+  const orders = useSelector((state) => state.admin.orders);
+  const { loading, error, list: orderList } = orders;
+
+  useEffect(() => {
+    dispatch(fetchOrders());
+  }, [dispatch]);
+
+  return (
+    <>
+      {error && (
+        <div className='flex justify-center py-4'>
+          <Alert variant='error' message={error} className='w-3/4' />
+        </div>
+      )}
+      {loading ? (
+        <Loader />
+      ) : (
+        <>
+          <HeaderRow />
+          {orderList && orderList.length === 0 && (
+            <div className='flex justify-start py-4'>
+              <h1>No orders found...</h1>
+            </div>
+          )}
+          {orderList && orderList.length > 0 && (
+            <div className='flex flex-col'>
+              {orderList.map((order) => (
+                <div
+                  key={order._id}
+                  className='flex flex-row h-16 bg-gray-300 hover:bg-gray-100'
+                >
+                  {buildCell(<p className='truncate'>{order._id}</p>, '')}
+                  {buildCell(order.createdAt.substring(0, 10), 'truncate')}
+                  {buildCell(`$${order.totalPrice}`, 'hidden lg:flex')}
+                  {buildCell(
+                    <i
+                      className={`${
+                        order.isPaid
+                          ? 'ri-check-line text-green-700'
+                          : 'ri-close-line text-red-700'
+                      } text-2xl`}
+                    ></i>,
+                    'hidden lg:flex'
+                  )}
+                  {buildCell(
+                    <i
+                      className={`${
+                        order.isDelivered
+                          ? 'ri-check-line text-green-700'
+                          : 'ri-close-line text-red-700'
+                      } text-2xl`}
+                    ></i>,
+                    'hidden lg:flex'
+                  )}
+                  {buildCell(
+                    <button
+                      className='hover:opacity-75  w-full h-full text-gray-800 flex items-center justify-center'
+                      onClick={() => history.push(`/orders/${order._id}`)}
+                    >
+                      <i className='text-2xl ri-eye-fill mx-2'></i>
+                      <p className='mx-2'>View</p>
+                    </button>,
+                    'justify-center'
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
+        </>
+      )}
+    </>
+  );
 };
 
 export default Orders;

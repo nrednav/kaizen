@@ -37,7 +37,7 @@ export const getOrderByID = asyncHandler(async (req, res) => {
     'name email'
   );
 
-  if (order && order.user._id.equals(req.user._id)) {
+  if (order && (order.user._id.equals(req.user._id) || req.user.isAdmin)) {
     res.json(order);
   } else {
     res.status(404);
@@ -68,4 +68,31 @@ export const updateOrderToPaid = asyncHandler(async (req, res) => {
     res.status(404);
     throw new Error('Order not found');
   }
+});
+
+// @desc    Update order delivery status
+// @route   PUT /api/orders/:id/deliver
+// @access  Private/Admin
+export const updateOrderToDelivered = asyncHandler(async (req, res) => {
+  const order = await Order.findById(req.params.id);
+
+  if (order) {
+    order.isDelivered = true;
+    order.deliveredAt = Date.now();
+
+    const updatedOrder = await order.save();
+
+    res.json(updatedOrder);
+  } else {
+    res.status(404);
+    throw new Error('Order not found');
+  }
+});
+
+// @desc    Fetch all user orders
+// @route   GET /api/orders
+// @access  Private/Admin
+export const fetchAllOrders = asyncHandler(async (req, res) => {
+  const orders = await Order.find({});
+  res.json(orders);
 });

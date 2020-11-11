@@ -9,7 +9,7 @@ const mainContent = {
   Details: <ProfileDetails></ProfileDetails>,
   Users: <Users></Users>,
   Products: <Products></Products>,
-  Order: <Orders></Orders>,
+  Orders: <Orders></Orders>,
 };
 
 const Main = ({ activeItem }) => {

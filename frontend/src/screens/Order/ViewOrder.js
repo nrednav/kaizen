@@ -3,11 +3,13 @@ import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 
 import { fetchOrder, payOrder } from '../../actions/order';
+import { deliverOrder } from '../../actions/admin/order';
 
 import Alert from '../../components/Alert';
 import Loader from '../../components/Loader';
 import { PayPalButton } from 'react-paypal-button-v2';
 import { ORDER_PAYMENT_RESET } from '../../constants/order';
+import { DELIVER_ORDER_RESET } from '../../constants/admin';
 
 const ViewOrder = ({ match, history }) => {
   const dispatch = useDispatch();
@@ -17,6 +19,12 @@ const ViewOrder = ({ match, history }) => {
 
   const orderPayment = useSelector((state) => state.orderPayment);
   const { loading: paymentLoading, success: paymentSuccess } = orderPayment;
+
+  const orderDeliver = useSelector((state) => state.admin.orderDeliver);
+  const { loading: deliverLoading, success: deliverSuccess } = orderDeliver;
+
+  const user = useSelector((state) => state.user);
+  const { profile } = user;
 
   const [sdkReady, setSdkReady] = useState(false);
 
@@ -43,20 +51,30 @@ const ViewOrder = ({ match, history }) => {
       document.body.appendChild(script);
     };
 
-    if (!order || order._id !== match.params.id || paymentSuccess) {
+    if (
+      !order ||
+      order._id !== match.params.id ||
+      paymentSuccess ||
+      deliverSuccess
+    ) {
       dispatch({ type: ORDER_PAYMENT_RESET });
+      dispatch({ type: DELIVER_ORDER_RESET });
       dispatch(fetchOrder(match.params.id));
-    } else if (!order.isPaid) {
+    } else if (!order.isPaid && !profile.isAdmin) {
       if (!window.paypal) {
         addPaypalScript();
       } else {
         setSdkReady(true);
       }
     }
-  }, [dispatch, match, order, paymentSuccess]);
+  }, [dispatch, match, order, paymentSuccess, profile, deliverSuccess]);
 
   const paymentSuccessHandler = (paymentResult) => {
     dispatch(payOrder(order._id, paymentResult));
+  };
+
+  const deliverHandler = () => {
+    dispatch(deliverOrder(match.params.id));
   };
 
   return (
@@ -70,7 +88,7 @@ const ViewOrder = ({ match, history }) => {
           <p className='pl-2'>Back</p>
         </div>
       </button>
-      {loading ? (
+      {loading || deliverLoading || paymentLoading ? (
         <Loader />
       ) : fetchOrderError ? (
         <div className='flex justify-center'>
@@ -177,9 +195,8 @@ const ViewOrder = ({ match, history }) => {
                     </div>
                   ))}
                 </div>
-                {!order.isPaid && (
+                {!order.isPaid && !profile.isAdmin && (
                   <div>
-                    {paymentLoading && <Loader />}
                     {!sdkReady ? (
                       <Loader />
                     ) : (
@@ -195,6 +212,19 @@ const ViewOrder = ({ match, history }) => {
                     )}
                   </div>
                 )}
+                {profile &&
+                  profile.isAdmin &&
+                  order.isPaid &&
+                  !order.isDelivered && (
+                    <div className='flex w-full'>
+                      <button
+                        onClick={deliverHandler}
+                        className=' text-base uppercase border h-12 px-4 text-white bg-gray-800 hover:opacity-75 justify-self-center mx-auto w-3/4'
+                      >
+                        Mark as delivered
+                      </button>
+                    </div>
+                  )}
               </div>
             </div>
           </div>

@@ -25,6 +25,7 @@ import {
   productDeleteReducer,
   productCreateReducer,
   productUpdateReducer,
+  orderDeliverReducer,
 } from './reducers/admin';
 
 const reducers = combineReducers({
@@ -49,6 +50,7 @@ const reducers = combineReducers({
     productDelete: productDeleteReducer,
     productCreate: productCreateReducer,
     productUpdate: productUpdateReducer,
+    orderDeliver: orderDeliverReducer,
   }),
 });
 
