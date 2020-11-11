@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
 import { logout } from '../actions/user';
+import SearchBox from './SearchBox';
 
 const Header = () => {
   const [showUserMenu, toggleUserMenu] = useState(false);
@@ -69,6 +70,9 @@ const Header = () => {
           id='nav-content'
         >
           <ul className='lg:flex justify-end flex-1 items-center'>
+            <div className='flex-1 mx-4 my-2'>
+              <SearchBox />
+            </div>
             <li>
               <div
                 className='py-2 px-4 text-xl text-white no-underline flex cursor-pointer'

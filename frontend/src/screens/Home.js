@@ -6,14 +6,17 @@ import Product from '../components/Product';
 import Loader from '../components/Loader';
 import Alert from '../components/Alert';
 
-const Home = () => {
+const Home = ({ match }) => {
   const dispatch = useDispatch();
+
   const productList = useSelector((state) => state.productList);
   const { loading, error, products } = productList;
 
+  const keyword = match.params.keyword;
+
   useEffect(() => {
-    dispatch(fetchProducts());
-  }, [dispatch]);
+    dispatch(fetchProducts(keyword));
+  }, [dispatch, keyword]);
 
   return (
     <>

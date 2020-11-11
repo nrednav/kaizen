@@ -32,6 +32,7 @@ const App = () => {
       <main className='mb-auto'>
         <AnimatedRoutes>
           <RouteTransition path='/' exact component={Home} />
+          <RouteTransition path='/search/:keyword' component={Home} />
           <RouteTransition path='/cart/:id?' component={Cart} />
           <RouteTransition path='/login' component={Login} />
           <RouteTransition path='/register' component={Register} />
