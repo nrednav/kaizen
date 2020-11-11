@@ -34,3 +34,32 @@ export const fetchProduct = (id) => async (dispatch) => {
     });
   }
 };
+
+export const addReview = (review, productID) => async (dispatch, getState) => {
+  try {
+    dispatch({ type: pc.ADD_REVIEW_REQUEST });
+
+    const {
+      user: { profile },
+    } = getState();
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${profile.token}`,
+      },
+    };
+
+    await axios.post(`/api/products/${productID}/reviews`, review, config);
+
+    dispatch({ type: pc.ADD_REVIEW_SUCCESS });
+  } catch (error) {
+    dispatch({
+      type: pc.ADD_REVIEW_FAILURE,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};

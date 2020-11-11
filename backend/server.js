@@ -1,4 +1,5 @@
 import express from 'express';
+import morgan from 'morgan';
 import dotenv from 'dotenv';
 import connectToDB from './config/db.js';
 import colors from 'colors';
@@ -21,6 +22,9 @@ connectToDB();
 const app = express();
 
 // Middleware - General
+if (process.env.NODE_ENV === 'development') {
+  app.use(morgan('dev'));
+}
 app.use(express.json());
 
 // Middleware - Routing

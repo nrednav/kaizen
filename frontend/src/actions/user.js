@@ -1,3 +1,4 @@
+import axios from 'axios';
 import {
   USER_LOGIN_FAILURE,
   USER_LOGIN_REQUEST,
@@ -9,7 +10,6 @@ import {
 } from '../constants/user';
 import { FETCH_PROFILE_RESET } from '../constants/userProfile';
 
-import axios from 'axios';
 import { FETCH_USER_ORDERS_RESET } from '../constants/order';
 import {
   DELIVER_ORDER_RESET,

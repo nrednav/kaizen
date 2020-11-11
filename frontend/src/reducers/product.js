@@ -30,3 +30,18 @@ export const productDetailsReducer = (
       return state;
   }
 };
+
+export const productAddReviewReducer = (state = {}, action) => {
+  switch (action.type) {
+    case pc.ADD_REVIEW_REQUEST:
+      return { loading: true, ...state };
+    case pc.ADD_REVIEW_SUCCESS:
+      return { loading: false, success: true };
+    case pc.ADD_REVIEW_FAILURE:
+      return { loading: false, error: action.payload };
+    case pc.ADD_REVIEW_RESET:
+      return {};
+    default:
+      return state;
+  }
+};

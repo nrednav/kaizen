@@ -14,7 +14,9 @@ const Product = ({ product }) => {
         <div className='bg-gray-800 p-4 w-64'>
           <div className='text-xl mb-2 text-gray-200'>
             <p className='truncate w-full'>{product.name}</p>
-            <span className='text-green-400'>${product.price}</span>
+            <span className='text-green-400'>
+              ${parseFloat(product.price).toFixed(2)}
+            </span>
           </div>
           <Rating
             value={product.rating}
