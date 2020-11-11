@@ -3,9 +3,15 @@ import * as pc from '../constants/product';
 export const productListReducer = (state = { products: [] }, action) => {
   switch (action.type) {
     case pc.FETCH_PRODUCTS_REQUEST:
-      return { loading: true, products: [] };
+      return { loading: true };
     case pc.FETCH_PRODUCTS_SUCCESS:
-      return { loading: false, products: action.payload };
+      const { products, pages, page } = action.payload;
+      return {
+        loading: false,
+        products,
+        pages,
+        page,
+      };
     case pc.FETCH_PRODUCTS_FAILURE:
       return { loading: false, error: action.payload };
     default:

@@ -4,7 +4,7 @@ import Rating from './Rating';
 
 const Product = ({ product }) => {
   return (
-    <div className='mx-8 my-4 w-64 overflow-hidden shadow-lg cursor-pointer flex justify-center items-center'>
+    <div className='mx-8 my-8 w-64 overflow-hidden shadow-lg cursor-pointer flex justify-center items-center'>
       <Link to={`/products/${product._id}`}>
         <img
           src={product.image}

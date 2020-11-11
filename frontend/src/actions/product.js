@@ -2,10 +2,14 @@ import axios from 'axios';
 
 import * as pc from '../constants/product';
 
-export const fetchProducts = (keyword = '') => async (dispatch) => {
+export const fetchProducts = (keyword = '', pageNumber = '') => async (
+  dispatch
+) => {
   try {
     dispatch({ type: pc.FETCH_PRODUCTS_REQUEST });
-    const { data } = await axios.get(`/api/products?keyword=${keyword}`);
+    const { data } = await axios.get(
+      `/api/products?keyword=${keyword}&pageNumber=${pageNumber}`
+    );
     dispatch({ type: pc.FETCH_PRODUCTS_SUCCESS, payload: data });
   } catch (error) {
     dispatch({
