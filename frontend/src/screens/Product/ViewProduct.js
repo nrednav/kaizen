@@ -51,7 +51,7 @@ const ViewProduct = ({ history, match }) => {
   return (
     <div className='mb-8'>
       <Link to='/'>
-        <button className='bg-transparent font-semibold p-8 uppercase hover:opacity-75  outline-none'>
+        <button className='bg-transparent font-semibold p-8 uppercase hover:opacity-75 focus:outline-none'>
           <div className='flex flex-row justify-evenly items-center'>
             <i className='ri-arrow-left-line'></i>
             <p className='pl-2'>Back</p>
