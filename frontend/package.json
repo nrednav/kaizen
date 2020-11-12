@@ -22,7 +22,9 @@
     "redux-thunk": "^2.3.0",
     "remixicon": "^2.5.0",
     "smoothscroll-for-websites": "^1.4.10",
-    "styled-components": "^5.2.0"
+    "styled-components": "^5.2.0",
+    "autoprefixer": "^10.0.1",
+    "tailwindcss": "^1.8.13"
   },
   "scripts": {
     "prestart": "npm run build:tailwind",
@@ -49,7 +51,5 @@
     ]
   },
   "devDependencies": {
-    "autoprefixer": "^10.0.1",
-    "tailwindcss": "^1.8.13"
   }
 }
