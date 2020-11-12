@@ -14,7 +14,7 @@ const Pagination = ({ pages, page, keyword, isAdmin = false }) => {
 
   return (
     pages > 1 && (
-      <div className='flex flex-row justify-center py-2'>
+      <div className='flex flex-row justify-start py-2 mx-20'>
         {[...Array(pages).keys()].map((x) => (
           <button
             key={x + 1}

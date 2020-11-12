@@ -31,7 +31,6 @@ const ViewProduct = ({ history, match }) => {
 
   useEffect(() => {
     if (addReviewSuccess) {
-      alert('Review submitted!');
       setRating(0);
       setComment('');
       dispatch({ type: ADD_REVIEW_RESET });
@@ -59,7 +58,7 @@ const ViewProduct = ({ history, match }) => {
           </div>
         </button>
       </Link>
-      {loading ? (
+      {loading || addReviewLoading ? (
         <Loader />
       ) : error ? (
         <div className='flex justify-center'>
@@ -156,11 +155,10 @@ const ViewProduct = ({ history, match }) => {
             <div className='mt-8 px-8 flex flex-row'>
               <div className='flex flex-col w-full md:w-6/12'>
                 <h2 className='text-3xl border-b-2 border-gray-400'>Reviews</h2>
-                {product.numReviews === 0 && (
+                {product.reviews && product.reviews.length === 0 && (
                   <Alert
                     variant='info'
                     message='No reviews yet'
-                    className='w-1/2'
                     showVariant={false}
                   ></Alert>
                 )}
@@ -172,13 +170,13 @@ const ViewProduct = ({ history, match }) => {
                         <div className='flex flex-row'>
                           <Rating value={review.rating} />
                           <p className='pl-2'>
-                            // {review.createdAt.substring(0, 10)}
+                            {review.createdAt.substring(0, 10)}
                           </p>
                         </div>
                         <p>{review.comment}</p>
                       </div>
                     ))}
-                  {!profile.isAdmin && (
+                  {profile && !profile.isAdmin && (
                     <div className='mt-8'>
                       <h2 className='text-3xl border-b-2 border-gray-400'>
                         Add a review?

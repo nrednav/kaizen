@@ -6,6 +6,7 @@ import Product from '../components/Product';
 import Loader from '../components/Loader';
 import Alert from '../components/Alert';
 import Pagination from '../components/Pagination';
+import ProductCarousel from '../components/ProductCarousel';
 
 const Home = ({ match }) => {
   const dispatch = useDispatch();
@@ -22,7 +23,8 @@ const Home = ({ match }) => {
 
   return (
     <>
-      <h1 className='mt-4 text-4xl text-center'>Latest Products</h1>
+      {!keyword && <ProductCarousel />}
+      <h1 className='mt-4 mx-20 text-4xl text-start'>Latest Products</h1>
       {loading ? (
         <Loader />
       ) : error ? (

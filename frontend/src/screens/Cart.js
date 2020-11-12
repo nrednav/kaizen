@@ -126,13 +126,13 @@ const Cart = ({ match, location, history }) => {
               onClick={() => checkoutHandler()}
               className={
                 `${
-                  items.length === 0 || profile.isAdmin
+                  items.length === 0 || (profile && profile.isAdmin)
                     ? 'cursor-not-allowed'
                     : ''
                 }` +
                 ' text-base uppercase border w-3/4 h-12 px-4 text-white bg-gray-800 hover:opacity-75'
               }
-              disabled={items.length === 0 || profile.isAdmin}
+              disabled={items.length === 0 || (profile && profile.isAdmin)}
             >
               Proceed to checkout
             </button>

@@ -51,3 +51,16 @@ export const productAddReviewReducer = (state = {}, action) => {
       return state;
   }
 };
+
+export const productTopRatedReducer = (state = {}, action) => {
+  switch (action.type) {
+    case pc.FETCH_TOP_PRODUCTS_REQUEST:
+      return { loading: true, ...state };
+    case pc.FETCH_TOP_PRODUCTS_SUCCESS:
+      return { loading: false, products: action.payload };
+    case pc.FETCH_TOP_PRODUCTS_FAILURE:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};

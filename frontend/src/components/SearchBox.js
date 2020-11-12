@@ -20,7 +20,7 @@ const SearchBox = () => {
         <input
           type='text'
           onChange={(e) => setKeyword(e.target.value)}
-          placeholder='Enter keywords...'
+          placeholder='Search products'
           className='py-2 px-4 w-full sm:w-auto appearance-none border focus:outline-none'
         />
         <button

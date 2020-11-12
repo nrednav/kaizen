@@ -5,6 +5,7 @@ import { protect, admin } from '../middleware/auth.js';
 const router = express.Router();
 
 router.get('/', controller.getProducts);
+router.get('/top', controller.getTopProducts);
 router.get('/:id', controller.getProductByID);
 router.delete('/:id', protect, admin, controller.deleteProduct);
 router.post('/', protect, admin, controller.createProduct);
