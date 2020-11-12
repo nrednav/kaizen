@@ -99,7 +99,7 @@ const UserListComponent = ({ users, setActiveComponent, setSelectedUser }) => {
         </div>
       )}
       {users && users.length > 0 && (
-        <div className='flex flex-col'>
+        <div className='flex flex-col mb-8'>
           {buildHeaderRow()}
           {users.map((user) => (
             <div

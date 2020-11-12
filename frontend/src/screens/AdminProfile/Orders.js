@@ -11,7 +11,7 @@ import { FadeTransition } from '../../animations/FadeTransition';
 const Orders = () => {
   return (
     <FadeTransition>
-      <div className='flex flex-col'>
+      <div className='flex flex-col mb-8'>
         <OrderList />
       </div>
     </FadeTransition>
@@ -78,7 +78,10 @@ const OrderList = () => {
                 >
                   {buildCell(<p className='truncate'>{order._id}</p>, '')}
                   {buildCell(order.createdAt.substring(0, 10), 'truncate')}
-                  {buildCell(`$${order.totalPrice}`, 'hidden lg:flex')}
+                  {buildCell(
+                    `$${parseFloat(order.totalPrice).toFixed(2)}`,
+                    'hidden lg:flex'
+                  )}
                   {buildCell(
                     <i
                       className={`${

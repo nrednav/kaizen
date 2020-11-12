@@ -17,7 +17,7 @@ const Products = () => {
 
   return (
     <FadeTransition>
-      <div className='flex flex-col'>
+      <div className='flex flex-col mb-8'>
         <button
           className='self-start mb-4 py-2 px-4 bg-gray-900 text-white hover:bg-opacity-75'
           onClick={createProductHandler}
