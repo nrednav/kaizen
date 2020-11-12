@@ -41,10 +41,10 @@ const ProductCarousel = () => {
               <i className='ri-arrow-left-s-line'></i>
             </button>
             <div className='flex flex-col flex-grow'>
-              <div className='flex mx-auto text-2xl text-center mt-8'>
+              <div className='flex mx-auto text-2xl text-center my-8'>
                 {products[activeProduct].name}
               </div>
-              <div className='flex flex-row h-1/2'>
+              <div className='flex flex-row min-h-half'>
                 <div className='w-6/12 flex-grow flex items-center justify-center'>
                   <img
                     src={products[activeProduct].image}

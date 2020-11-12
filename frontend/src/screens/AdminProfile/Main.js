@@ -14,7 +14,7 @@ const mainContent = {
 
 const Main = ({ activeItem }) => {
   return (
-    <div className='flex flex-col py-4 px-8 w-full'>
+    <div className='flex flex-col py-4 px-8 w-full overflow-y-scroll'>
       <h1 className='text-4xl w-full'>{activeItem.label}</h1>
       <div className='mt-4 h-full'>{mainContent[activeItem.label]}</div>
     </div>

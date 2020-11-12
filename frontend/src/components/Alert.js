@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Alert = ({ variant, message, className, showVariant = true }) => {
+const Alert = ({ variant, message, className = '', showVariant = true }) => {
   var colors = {
     info: 'blue',
     error: 'red',
